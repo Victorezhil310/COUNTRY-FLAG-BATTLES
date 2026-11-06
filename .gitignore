@@ -1,0 +1,28 @@
+# --- Play Store signing material: NEVER commit ---
+android/keystore/
+android/keystore.properties
+
+# --- machine-specific / build outputs ---
+android/local.properties
+android/.gradle/
+android/build/
+android/app/build/
+tools/gradledist/
+tools/cmdtools/
+tools/*.zip
+tools/*.jar
+tools/*.png
+tools/*.err
+tools/*.txt
+tools/*.json
+tools/*.css
+tools/*.xml
+*.log
+
+# --- IDE ---
+.idea/
+*.iml
+
+# --- old desktop prototype (has its own nested .git); root-anchored so it
+# --- cannot match the lowercase flags/ asset dirs on case-insensitive Windows
+/FLAGS/

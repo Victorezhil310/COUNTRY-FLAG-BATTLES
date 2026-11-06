@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>BOOST FLAG RUSH — Country Flag Arena</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;width:100%;height:100%;height:100dvh;background:#000;overflow:hidden;touch-action:none;-webkit-user-select:none;user-select:none}
+  body{display:flex;align-items:center;justify-content:center}
+  canvas{display:block;cursor:pointer}
+  #countrySearch{position:fixed;z-index:2;display:none;padding:0 14px;border:2px solid #c08cff;border-radius:10px;background:#111;color:#fff;font:700 18px Montserrat,Arial,sans-serif;outline:none;touch-action:auto;user-select:text;-webkit-user-select:text}
+  #countrySearch:focus{box-shadow:0 0 14px #c08cff}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<input id="countrySearch" type="search" autocomplete="off" autocapitalize="words" aria-label="Search for a country to add">
+<script>
+"use strict";
+/* ======================= CONFIG ======================= */
+const W = 720, H = 1280;                 // logical 9:16 canvas
+const CX = 360, CY = 610, RR = 330;      // arena centre / radius
+const TH = 10;                           // ring thickness
+let GAP_HALF = 0.21;                   // half of gap angle (rad)
+const AUTO_GAP = true;                 // enable automatic open/close of the gap
+let GAP_MIN = 0.06;                    // smallest half-angle (rad)
+let GAP_MAX = 0.32;                    // largest half-angle (rad)
+const GAP_OPEN_SPEED = 1.2;            // speed of open/close (radians per second)
+let OMEGA = 0.75;                     // moving gap speed (rad/s)
+const RF = 13;                           // flag collision radius
+const FW = 34, FH = 25;                  // flag max draw size in arena
+const G = 0;                             // weightless flags
+const E_W = 0.92, E_F = 0.85;            // restitution wall / flag
+const MINB = 240;                        // min bounce speed off the ring
+let MAXV = 950;
+const GRID = {x: 24, y: 1007, cols: 24, cw: 28, ch: 16, fw: 24, fh: 16};
+const FONT = 'Montserrat, "Arial Black", Arial, sans-serif';
+
+const RAW = "af:Afghanistan,al:Albania,dz:Algeria,ad:Andorra,ao:Angola,ag:Antigua and Barbuda,ar:Argentina,am:Armenia,au:Australia,at:Austria,az:Azerbaijan,bs:Bahamas,bh:Bahrain,bd:Bangladesh,bb:Barbados,by:Belarus,be:Belgium,bz:Belize,bj:Benin,bt:Bhutan,bo:Bolivia,ba:Bosnia and Herzegovina,bw:Botswana,br:Brazil,bn:Brunei,bg:Bulgaria,bf:Burkina Faso,bi:Burundi,cv:Cape Verde,kh:Cambodia,cm:Cameroon,ca:Canada,cf:Central African Republic,td:Chad,cl:Chile,cn:China,co:Colombia,km:Comoros,cg:Congo,cd:DR Congo,cr:Costa Rica,ci:Ivory Coast,hr:Croatia,cu:Cuba,cy:Cyprus,cz:Czechia,dk:Denmark,dj:Djibouti,dm:Dominica,do:Dominican Republic,ec:Ecuador,eg:Egypt,sv:El Salvador,gq:Equatorial Guinea,er:Eritrea,ee:Estonia,sz:Eswatini,et:Ethiopia,fj:Fiji,fi:Finland,fr:France,ga:Gabon,gm:Gambia,ge:Georgia,de:Germany,gh:Ghana,gr:Greece,gd:Grenada,gt:Guatemala,gn:Guinea,gw:Guinea-Bissau,gy:Guyana,ht:Haiti,hn:Honduras,hu:Hungary,is:Iceland,in:India,id:Indonesia,ir:Iran,iq:Iraq,ie:Ireland,il:Israel,it:Italy,jm:Jamaica,jp:Japan,jo:Jordan,kz:Kazakhstan,ke:Kenya,ki:Kiribati,kw:Kuwait,kg:Kyrgyzstan,la:Laos,lv:Latvia,lb:Lebanon,ls:Lesotho,lr:Liberia,ly:Libya,li:Liechtenstein,lt:Lithuania,lu:Luxembourg,mg:Madagascar,mw:Malawi,my:Malaysia,mv:Maldives,ml:Mali,mt:Malta,mh:Marshall Islands,mr:Mauritania,mu:Mauritius,mx:Mexico,fm:Micronesia,md:Moldova,mc:Monaco,mn:Mongolia,me:Montenegro,ma:Morocco,mz:Mozambique,mm:Myanmar,na:Namibia,nr:Nauru,np:Nepal,nl:Netherlands,nz:New Zealand,ni:Nicaragua,ne:Niger,ng:Nigeria,kp:North Korea,mk:North Macedonia,no:Norway,om:Oman,pk:Pakistan,pw:Palau,pa:Panama,pg:Papua New Guinea,py:Paraguay,pe:Peru,ph:Philippines,pl:Poland,pt:Portugal,qa:Qatar,kr:South Korea,ro:Romania,ru:Russia,rw:Rwanda,kn:Saint Kitts and Nevis,lc:Saint Lucia,vc:Saint Vincent and the Grenadines,ws:Samoa,sm:San Marino,st:Sao Tome and Principe,sa:Saudi Arabia,sn:Senegal,rs:Serbia,sc:Seychelles,sl:Sierra Leone,sg:Singapore,sk:Slovakia,si:Slovenia,sb:Solomon Islands,so:Somalia,za:South Africa,ss:South Sudan,es:Spain,lk:Sri Lanka,sd:Sudan,sr:Suriname,se:Sweden,ch:Switzerland,sy:Syria,tj:Tajikistan,tz:Tanzania,th:Thailand,tl:Timor-Leste,tg:Togo,to:Tonga,tt:Trinidad and Tobago,tn:Tunisia,tr:Turkey,tm:Turkmenistan,tv:Tuvalu,ug:Uganda,ua:Ukraine,ae:United Arab Emirates,gb:United Kingdom,us:United States,uy:Uruguay,uz:Uzbekistan,vu:Vanuatu,ve:Venezuela,vn:Vietnam,ye:Yemen,zm:Zambia,zw:Zimbabwe,ps:Palestine,va:Vatican City,tw:Taiwan";
+const COUNTRIES = RAW.split(",").map(s => { const i = s.indexOf(":"); return {c: s.slice(0, i), n: s.slice(i + 1), tex: null}; });
+const TOTAL = COUNTRIES.length;
+
+/* Colour themes – a new one every round */
+const PALETTES = [
+  {name:"GALAXY",  bg:["#1a0845","#6a1fca"], glow:"#e08bff", panel:"#180440", border:"#c08cff", accent:"#ffe25f", disk:["#ffaa5c","#fff2d1","#d08cff"]},
+  {name:"NEON",    bg:["#003f47","#00d3d3"], glow:"#4bfff4", panel:"#08263c", border:"#4bfff4", accent:"#ffe56d", disk:["#4bfff4","#ffffff","#5d9fff"]},
+  {name:"SUNSET",  bg:["#4e0a28","#ff7456"], glow:"#ffc367", panel:"#450523", border:"#ffaa5d", accent:"#ffe286", disk:["#ff5d5d","#fff4c0","#ffba20"]},
+  {name:"OCEAN",   bg:["#061f53","#3e98ff"], glow:"#9fe4ff", panel:"#08204e", border:"#7bc8ff", accent:"#ffe25f", disk:["#7bc8ff","#ffffff","#aa7cff"]},
+  {name:"EMERALD", bg:["#06401f","#32d078"], glow:"#bfff8b", panel:"#06321c", border:"#6fffaa", accent:"#fff16d", disk:["#e6ff5d","#ffffff","#10e99a"]},
+  {name:"CRIMSON", bg:["#40000a","#f03862"], glow:"#ff8baa", panel:"#2c0218", border:"#ff6d8d", accent:"#ffe25f", disk:["#ff4d75","#fff4f6","#ffba5c"]},
+  {name:"CLASSIC", bg:["#1aaff0","#45fcff"], glow:"#ffffff", panel:"#236797", border:"#4a69f8", accent:"#ffd951", disk:["#ffc020","#ffffff","#ff6df2"]},
+];
+
+/* ======================= CANVAS ======================= */
+const cv = document.getElementById("c");
+const ctx = cv.getContext("2d");
+const countrySearch = document.getElementById("countrySearch");
+let S = 1, DPR = 1;
+function resize() {
+  DPR = Math.min(window.devicePixelRatio || 1, 2);
+  S = Math.min(innerWidth / W, innerHeight / H);
+  cv.style.width = (W * S) + "px"; cv.style.height = (H * S) + "px";
+  cv.width = Math.round(W * S * DPR); cv.height = Math.round(H * S * DPR);
+  positionCountrySearch();
+}
+function positionCountrySearch() {
+  const rect = cv.getBoundingClientRect();
+  countrySearch.style.left = (rect.left + (CX - 180) * S) + "px";
+  countrySearch.style.top = (rect.top + 220 * S) + "px";
+  countrySearch.style.width = (360 * S) + "px";
+  countrySearch.style.height = (50 * S) + "px";
+  countrySearch.style.fontSize = (18 * S) + "px";
+  countrySearch.style.display = countrySearch.dataset.open === "true" ? "block" : "none";
+}
+addEventListener("resize", resize); resize();
+
+/* ======================= FLAG TEXTURES ======================= */
+function rr(c, x, y, w, h, r) {
+  r = Math.min(r, w / 2, h / 2);
+  c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r);
+  c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath();
+}
+function finishTex(cn, w, h) {
+  const c = cn.getContext("2d");
+  const g = c.createLinearGradient(0, 0, 0, h);
+  g.addColorStop(0, "rgba(255,255,255,0.24)"); g.addColorStop(0.42, "rgba(255,255,255,0.015)"); g.addColorStop(1, "rgba(0,0,0,0.2)");
+  c.fillStyle = g; c.fillRect(0, 0, w, h);
+  c.globalAlpha = 0.1;
+  c.strokeStyle = "#fff"; c.lineWidth = 0.6;
+  for (let y = 1; y < h; y += 3) { c.beginPath(); c.moveTo(0, y); c.lineTo(w, y); c.stroke(); }
+  c.strokeStyle = "#000";
+  for (let x = 1; x < w; x += 4) { c.beginPath(); c.moveTo(x, 0); c.lineTo(x, h); c.stroke(); }
+  c.globalAlpha = 1;
+  c.restore();
+  rr(c, 1, 1, w - 2, h - 2, 7); c.lineWidth = 2; c.strokeStyle = "rgba(0,0,0,0.28)"; c.stroke();
+  rr(c, 2.5, 2.5, w - 5, h - 5, 6); c.lineWidth = 1; c.strokeStyle = "rgba(255,255,255,0.42)"; c.stroke();
+}
+function makeTex(img) {
+  const w = 160, h = Math.max(60, Math.round(160 * img.naturalHeight / img.naturalWidth));
+  const cn = document.createElement("canvas"); cn.width = w; cn.height = h;
+  const c = cn.getContext("2d"); c.save(); rr(c, 0, 0, w, h, 8); c.clip(); c.drawImage(img, 0, 0, w, h);
+  finishTex(cn, w, h);
+  return {cv: cn, ar: h / w};
+}
+function fallbackTex(ct) {
+  const w = 160, h = 106, cn = document.createElement("canvas"); cn.width = w; cn.height = h;
+  const c = cn.getContext("2d"); c.save(); rr(c, 0, 0, w, h, 8); c.clip();
+  let hsh = 0; for (const ch of ct.c) hsh = hsh * 31 + ch.charCodeAt(0);
+  c.fillStyle = `hsl(${hsh % 360},78%,42%)`; c.fillRect(0, 0, w, h);
+  c.fillStyle = "rgba(255,255,255,0.16)"; c.fillRect(0, 0, w, h / 3);
+  c.fillStyle = "#fff"; c.font = `900 44px ${FONT}`; c.textAlign = "center"; c.textBaseline = "middle"; c.fillText(ct.c.toUpperCase(), w / 2, h / 2 + 1);
+  finishTex(cn, w, h);
+  return {cv: cn, ar: h / w};
+}
+let loaded = 0;
+COUNTRIES.forEach(ct => {
+  ct.tex = fallbackTex(ct);
+  const img = new Image(); img.crossOrigin = "anonymous";
+  img.onload = () => { ct.tex = makeTex(img); loaded++; };
+  img.onerror = () => { loaded++; };
+  img.src = `https://flagcdn.com/w160/${ct.c}.png`;
+});
+function dims(tex, mw, mh) { let w = mw, h = w * tex.ar; if (h > mh) { h = mh; w = h / tex.ar; } return [w, h]; }
+
+/* ======================= AUDIO ======================= */
+let AC = null, master = null, soundOn = true;
+function initAudio() {
+  if (AC) return;
+  try {
+    AC = new (window.AudioContext || window.webkitAudioContext)();
+    master = AC.createGain(); master.gain.value = soundOn ? 0.8 : 0; master.connect(AC.destination);
+    // low black-hole hum
+    const hum = AC.createGain(); hum.gain.value = 0.025; hum.connect(master);
+    [55, 82.5].forEach(f => { const o = AC.createOscillator(); o.type = "sine"; o.frequency.value = f; o.connect(hum); o.start(); });
+  } catch (e) { AC = null; }
+}
+function tone(freq, dur, type = "sine", vol = 0.1, slideTo = null, delay = 0) {
+  if (!AC || !soundOn) return;
+  const t = AC.currentTime + delay, o = AC.createOscillator(), g = AC.createGain();
+  o.type = type; o.frequency.setValueAtTime(freq, t);
+  if (slideTo) o.frequency.exponentialRampToValueAtTime(slideTo, t + dur);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.008); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  o.connect(g); g.connect(master); o.start(t); o.stop(t + dur + 0.05);
+}
+let lastBounce = 0, lastGrunt = 0;
+function sBounce() { const n = performance.now(); if (n - lastBounce < 45) return; lastBounce = n; tone(520 + Math.random() * 520, 0.06, "sine", 0.045); }
+function sExit() { tone(520, 0.16, "triangle", 0.1, 880); tone(1040, 0.12, "sine", 0.04, 520); }
+function sLand() { tone(1500 + Math.random() * 300, 0.04, "square", 0.02); }
+function sBeep(f) { tone(f, 0.18, "square", 0.08); }
+function sFanfare() { [523, 659, 784, 1047].forEach((f, i) => { tone(f, 0.35, "triangle", 0.14, null, i * 0.13); tone(f / 2, 0.35, "sine", 0.08, null, i * 0.13); }); tone(1047, 0.9, "triangle", 0.12, null, 0.55); }
+
+/* ---------- FUNNY EMOTION SOUNDS (anger / cry / smile) ---------- */
+function blip(freq, at, dur, type, vol, glideTo, vibHz, vibDepth) {
+  if (!AC || !soundOn) return;
+  const o = AC.createOscillator(), g = AC.createGain();
+  o.type = type; o.frequency.setValueAtTime(freq, at);
+  if (glideTo) o.frequency.exponentialRampToValueAtTime(Math.max(20, glideTo), at + dur);
+  if (vibHz) {
+    const lfo = AC.createOscillator(), lg = AC.createGain();
+    lfo.type = "sine"; lfo.frequency.value = vibHz; lg.gain.value = freq * vibDepth;
+    lfo.connect(lg); lg.connect(o.frequency); lfo.start(at); lfo.stop(at + dur + 0.1);
+  }
+  g.gain.setValueAtTime(0.0001, at);
+  g.gain.exponentialRampToValueAtTime(vol, at + 0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+  o.connect(g); g.connect(master); o.start(at); o.stop(at + dur + 0.05);
+}
+function sAngry() {                                   // cartoon growl + snarl
+  if (!AC || !soundOn) return; const t = AC.currentTime;
+  blip(190, t, 0.45, "sawtooth", 0.15, 78, 27, 0.14);
+  blip(95, t, 0.5, "square", 0.06, 62, 17, 0.07);
+  blip(330, t + 0.03, 0.16, "sawtooth", 0.09, 150, 32, 0.2);
+}
+function sCry() {                                     // "boo-hoo-hoo" sobbing
+  if (!AC || !soundOn) return; const t = AC.currentTime;
+  [[0, 640, 430], [0.3, 720, 470], [0.62, 660, 360]].forEach(([d, f0, f1]) => {
+    blip(f0, t + d, 0.28, "triangle", 0.13, f1, 9, 0.1);
+    blip(f0 * 2, t + d, 0.24, "sine", 0.035, f1 * 2, 12, 0.08);
+  });
+}
+function sLaugh() {                                   // hihihihi giggle
+  if (!AC || !soundOn) return; const t = AC.currentTime;
+  [880, 1000, 1120, 1240, 1360, 1200].forEach((f, i) => blip(f, t + i * 0.085, 0.07, "triangle", 0.09, f * 1.08));
+  blip(1420, t + 0.55, 0.18, "sine", 0.07, 900, 14, 0.06);
+}
+const EMOJI_FONT = '"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif';
+const EMOTIONS = {
+  anger: {emoji:"😡", sfx:sAngry, color:"#ff3b30"},
+  cry:   {emoji:"😭", sfx:sCry,   color:"#4db8ff"},
+  smile: {emoji:"😄", sfx:sLaugh, color:"#ffd23f"},
+  shock: {emoji:"😱", sfx:sAngry, color:"#ff6b6b"},
+  laugh: {emoji:"🤣", sfx:sLaugh, color:"#ffd93d"},
+  cool:  {emoji:"😎", sfx:sLaugh, color:"#5cd6ff"},
+  love:  {emoji:"😍", sfx:sLaugh, color:"#ff5f9f"},
+  fire:  {emoji:"🔥", sfx:sAngry, color:"#ff5e00"},
+  star:  {emoji:"⭐", sfx:sLaugh, color:"#ffd700"},
+  party: {emoji:"🎉", sfx:sLaugh, color:"#ff9500"}
+};
+let reactions = [];
+function emote(kind, x, y, opt = {}) {
+  const e = EMOTIONS[kind]; if (!e) return;
+  e.sfx();
+  reactions.push({emoji: e.emoji, color: e.color, x, y, t: 0, life: opt.life || 1.2, size: opt.size || 54});
+  if (reactions.length > 36) reactions.shift();
+  for (let i = 0; i < 7; i++) {
+    const a = Math.random() * 6.28;
+    particles.push({x, y, vx: Math.cos(a) * 70, vy: Math.sin(a) * 70 - 40, life: 0.5, t: 0, c: e.color});
+  }
+}
+function pickEmotion() {
+  const r = Math.random();
+  if (r < 0.25) return "cry";
+  if (r < 0.45) return "anger";
+  if (r < 0.60) return "smile";
+  if (r < 0.70) return "shock";
+  if (r < 0.80) return "laugh";
+  if (r < 0.87) return "cool";
+  if (r < 0.92) return "love";
+  if (r < 0.96) return "fire";
+  if (r < 0.98) return "star";
+  return "party";
+}
+
+/* ======================= MALE VOICE ======================= */
+let voices = [];
+function loadVoices() { if ("speechSynthesis" in window) voices = speechSynthesis.getVoices(); }
+if ("speechSynthesis" in window) { loadVoices(); speechSynthesis.onvoiceschanged = loadVoices; }
+function pickVoice() {
+  loadVoices();
+  const en = voices.filter(v => /^en/i.test(v.lang));
+  const male = [/\bmale\b/i, /guy/i, /andrew/i, /christopher/i, /eric/i, /brian/i, /roger/i, /steffan/i, /david/i, /mark/i, /george/i, /ryan/i, /james/i, /thomas/i, /daniel/i, /alex\b/i, /fred/i, /aaron/i, /arthur/i, /oliver/i];
+  for (const re of male) { const v = en.find(v => re.test(v.name) && !/female/i.test(v.name)); if (v) return {v, male: true}; }
+  return {v: en[0] || null, male: false};
+}
+const speechQueue = [];
+let activeSpeech = null;
+function processSpeechQueue() {
+  if (activeSpeech || !speechQueue.length) return;
+  const item = speechQueue.shift();
+  const p = pickVoice();
+  const u = new SpeechSynthesisUtterance(item.text);
+  let finished = false, timer;
+  const finish = () => {
+    if (finished) return;
+    finished = true;
+    clearTimeout(timer);
+    activeSpeech = null;
+    processSpeechQueue();
+    if (item.cb) item.cb();
+  };
+  const watchdog = () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      if (paused) { watchdog(); return; }
+      if ("speechSynthesis" in window) speechSynthesis.cancel();
+      finish();
+    }, Math.max(10000, item.text.length * 350));
+  };
+  if (p.v) { u.voice = p.v; u.lang = p.v.lang; } else u.lang = "en-US";
+  u.pitch = p.male ? 0.88 : 0.78;
+  u.rate = 1;
+  u.volume = 1;
+  u.onstart = watchdog;
+  u.onend = finish;
+  u.onerror = finish;
+  activeSpeech = u;
+  watchdog();
+  speechSynthesis.resume();
+  speechSynthesis.speak(u);
+}
+function speak(text, cb) {
+  if (!soundOn || !("speechSynthesis" in window)) {
+    setTimeout(() => { if (cb) cb(); }, 1600 + text.length * 50);
+    return;
+  }
+  if (!cb && speechQueue.length > 2) return;   // never let reactions jam the queue
+  speechQueue.push({text, cb});
+  processSpeechQueue();
+}
+function announceFlag(name, emotion) {
+  if (!soundOn || !("speechSynthesis" in window)) return;
+  const list = (emotion && EMOTION_CALLS[emotion]) || ELIMINATION_CALLS;
+  const phrase = list[Math.floor(Math.random() * list.length)](name);
+  speak(phrase);
+}
+function say(text, cb) { speak(text, cb); }
+
+/* ======================= STATE ======================= */
+let round = 1, pal = PALETTES[0], dir = 1, gapA = -Math.PI / 2, roundT = 0, T = 0;
+let flagScale = 1;
+let phase = "start", paused = false, speed = 1, cdT = 0, lastCd = 4;
+let flags = [], alive = [], anims = [], done = [], winners = [], elimCount = 0;
+let winner = null, winT = 0, showLike = false, likeT = 0, roundToken = 0;
+let particles = [], confetti = [];
+let difficulty = "Medium", difficultyLevel = 2;
+let score = 0, combo = 0, maxCombo = 0;
+let searchInput = "", searchResults = [], showSearch = false;
+let roundFlagTotal = TOTAL;
+let infiniteMode = false, infiniteRound = 0;
+const ELIMINATION_CALLS = [
+  name => `${name} is out! Chat, who survives?`,
+  name => `Flag down! ${name} gets swept away!`,
+  name => `There goes ${name}! The gap is ruthless!`,
+  name => `${name} has been eliminated! One flag closer to the crown!`,
+  name => `And that's ${name} out! Who is your champion?`
+];
+const EMOTION_CALLS = {
+  anger: [
+    name => `${name} is FURIOUS! Storms out of the arena!`,
+    name => `${name} is raging! Grrr! Blames the moving gap!`,
+    name => `How angry is ${name} right now? Extremely! Out they go!`
+  ],
+  cry: [
+    name => `${name} is crying! Boo hoo, eliminated!`,
+    name => `Look at ${name} sobbing! Say goodbye, ${name}!`,
+    name => `${name} bursts into tears and floats away!`
+  ],
+  smile: [
+    name => `${name} escapes with a big smile! Ha ha!`,
+    name => `${name} is laughing all the way out of the arena!`,
+    name => `Bye bye! ${name} leaves grinning!`
+  ],
+  shock: [
+    name => `${name} is SHOCKED! Can't believe it!`,
+    name => `${name} can't believe what just happened!`,
+    name => `${name} is stunned speechless! Out!`
+  ],
+  laugh: [
+    name => `${name} is dying of laughter! Hahaha!`,
+    name => `${name} can't stop laughing! What a ride!`,
+    name => `${name} leaves with tears of joy! Ha ha!`
+  ],
+  cool: [
+    name => `${name} stays cool all the way out!`,
+    name => `${name} is too cool for this arena!`,
+    name => `${name} leaves with style! So cool!`
+  ],
+  love: [
+    name => `${name} loves the excitement! Hearts everywhere!`,
+    name => `${name} spreads love as they exit!`,
+    name => `${name} loved every moment! Bye for now!`
+  ],
+  fire: [
+    name => `${name} is on FIRE! Burning hot elimination!`,
+    name => `${name} brings the heat! So hot right now!`,
+    name => `${name} is blazing out of the arena! 🔥`
+  ],
+  star: [
+    name => `${name} was a star! Goodbye superstar!`,
+    name => `${name} shines bright even in defeat!`,
+    name => `${name} is a shooting star leaving the arena!`
+  ],
+  party: [
+    name => `${name} parties all the way out! 🎉`,
+    name => `${name} celebrates their exit! Party time!`,
+    name => `${name} had a blast! What a party!`
+  ]
+};
+
+/* ======================= DIFFICULTY CONFIG ======================= */
+const DIFFICULTY_CONFIG = {
+  Easy: { gapSpeed: 0.5, gapMin: 0.35, gapMax: 0.45, gravity: 0, maxSpeed: 700, boostMult: 1.5 },
+  Medium: { gapSpeed: 0.75, gapMin: 0.21, gapMax: 0.32, gravity: 0, maxSpeed: 950, boostMult: 2.4 },
+  Hard: { gapSpeed: 1.2, gapMin: 0.12, gapMax: 0.25, gravity: 0, maxSpeed: 1200, boostMult: 3.0 },
+  Insane: { gapSpeed: 1.8, gapMin: 0.06, gapMax: 0.18, gravity: 0, maxSpeed: 1500, boostMult: 4.0 },
+  Nightmare: { gapSpeed: 2.35, gapMin: 0.035, gapMax: 0.12, gravity: 0, maxSpeed: 1800, boostMult: 4.5 },
+  Chaos: { gapSpeed: 3.1, gapMin: 0.025, gapMax: 0.09, gravity: 0, maxSpeed: 2200, boostMult: 5.2 }
+};
+function applyDifficulty() {
+  const cfg = DIFFICULTY_CONFIG[difficulty];
+  OMEGA = cfg.gapSpeed;
+  GAP_MIN = cfg.gapMin;
+  GAP_MAX = cfg.gapMax;
+  MAXV = cfg.maxSpeed;
+}
+
+const stars = Array.from({length: 140}, () => ({x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.6 + 0.3, p: Math.random() * 6}));
+applyDifficulty();
+
+function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = (Math.random() * (i + 1)) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+/* ======================= SEARCH FUNCTIONALITY ======================= */
+function searchCountries(query) {
+  if (!query || query.length < 2) return [];
+  const q = query.toLowerCase();
+  return COUNTRIES.filter(ct => ct.n.toLowerCase().includes(q) || ct.c.toLowerCase().includes(q)).slice(0, 5);
+}
+function addCountryToCenter(country) {
+  if (!country || !["play", "start", "count"].includes(phase)) return;
+  const f = {
+    ct: country,
+    x: CX + (Math.random() - 0.5) * 10,
+    y: CY + (Math.random() - 0.5) * 10,
+    vx: (Math.random() - 0.5) * 200,
+    vy: (Math.random() - 0.5) * 200,
+    a: (Math.random() - 0.5) * 0.4,
+    av: 0,
+    ph: Math.random() * 6.28,
+    state: "alive"
+  };
+  flags.push(f);
+  alive.push(f);
+  roundFlagTotal++;
+  sFanfare();
+  emote("smile", CX, CY - 60, {life: 1.2, size: 72});
+  speak(`${country.n} joins the arena!`);
+  closeSearch();
+}
+function openSearch() {
+  showSearch = true;
+  searchInput = "";
+  searchResults = [];
+  countrySearch.value = "";
+  countrySearch.dataset.open = "true";
+  positionCountrySearch();
+  countrySearch.focus();
+}
+function closeSearch() {
+  showSearch = false;
+  searchInput = "";
+  searchResults = [];
+  countrySearch.value = "";
+  countrySearch.dataset.open = "false";
+  positionCountrySearch();
+}
+function setupRound() {
+  applyDifficulty();
+  // Progressive difficulty in infinite mode
+  if (infiniteMode) {
+    infiniteRound++;
+    const progressiveBoost = Math.min(5, 1 + infiniteRound * 0.05);
+    OMEGA *= progressiveBoost;
+    GAP_MIN = Math.max(0.015, GAP_MIN * (1 - Math.min(0.65, infiniteRound * 0.005)));
+    GAP_MAX = Math.max(GAP_MIN + 0.02, GAP_MAX * (1 - Math.min(0.65, infiniteRound * 0.005)));
+  }
+  const hue = (round * 137.508) % 360;
+  pal = round <= PALETTES.length ? PALETTES[round - 1] : {
+    name: "COLOR " + round,
+    bg: [`hsl(${hue}, 80%, 9%)`, `hsl(${(hue + 55) % 360}, 80%, 30%)`],
+    glow: `hsl(${hue}, 100%, 72%)`, panel: `hsl(${hue}, 70%, 8%)`,
+    border: `hsl(${(hue + 35) % 360}, 100%, 65%)`, accent: `hsl(${(hue + 180) % 360}, 100%, 65%)`,
+    disk: [`hsl(${hue}, 100%, 60%)`, "#ffffff", `hsl(${(hue + 180) % 360}, 100%, 65%)`]
+  };
+  dir = round % 2 ? 1 : -1;
+  gapA = -Math.PI / 2 + (Math.random() - 0.5) * 2;
+  roundT = 0; elimCount = 0; anims = []; done = []; winner = null; showLike = false; particles = []; confetti = []; reactions = [];
+  // hex grid spawn
+  const pts = [], sp = 2 * RF + 3;
+  for (let y = -RR; y <= RR; y += sp * 0.866) for (let x = -RR; x <= RR; x += sp) {
+    const ox = x + ((Math.round((y + RR) / (sp * 0.866)) % 2) ? sp / 2 : 0);
+    if (Math.hypot(ox, y) < RR - 38) pts.push([CX + ox, CY + y]);
+  }
+  shuffle(pts);
+  const order = shuffle(COUNTRIES.slice());
+  flags = order.map((ct, i) => {
+    const p = pts[i % pts.length];
+    return {ct, x: p[0] + (Math.random() - 0.5) * 3, y: p[1] + (Math.random() - 0.5) * 3, vx: (Math.random() - 0.5) * 300, vy: (Math.random() - 0.5) * 300,
+            a: (Math.random() - 0.5) * 0.4, av: 0, ph: Math.random() * 6.28, state: "alive"};
+  });
+  alive = flags.slice();
+  roundFlagTotal = flags.length;
+}
+setupRound();
+
+function startCountdown() { phase = "count"; cdT = 3.2; lastCd = 4; speak(`Round ${round} is starting! Watch the moving gap!`); }
+function nextRound() { roundToken++; round++; boostT = 0; boostCooldown = 0; combo = 0; setupRound(); startCountdown(); }
+function adjustFlagScale(amount) { flagScale = Math.max(0.5, Math.min(2.5, Math.round((flagScale + amount) * 100) / 100)); }
+function flagRadius() { return RF * flagScale; }
+
+/* ======================= PHYSICS ======================= */
+function angDiff(a, b) { let d = a - b; while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI; return d; }
+function step(dt) {
+  const turbo = boostT > 0;
+  const cfg = DIFFICULTY_CONFIG[difficulty];
+  gapA += dir * OMEGA * dt * (turbo ? cfg.boostMult : 1);
+  if (AUTO_GAP) {
+    // oscillate gap size between GAP_MIN and GAP_MAX using global time T
+    const amp = 0.5 + 0.5 * Math.sin(T * GAP_OPEN_SPEED);
+    GAP_HALF = Math.min(GAP_MAX, (GAP_MIN + (GAP_MAX - GAP_MIN) * amp) * (turbo ? 1.4 : 1));
+  }
+  roundT += dt;
+  for (const f of alive) {
+    f.vy += G * dt;
+    const sp = Math.hypot(f.vx, f.vy); if (sp > MAXV) { f.vx *= MAXV / sp; f.vy *= MAXV / sp; }
+    f.x += f.vx * dt; f.y += f.vy * dt;
+    f.av -= f.a * 6 * dt; f.av *= 1 - 1.5 * dt; f.a += f.av * dt;
+  }
+  const radius = flagRadius();
+  // sort & sweep flag-flag collisions
+  for (let i = 1; i < alive.length; i++) { const f = alive[i]; let j = i - 1; while (j >= 0 && alive[j].x > f.x) { alive[j + 1] = alive[j]; j--; } alive[j + 1] = f; }
+  const D = 2 * radius;
+  for (let i = 0; i < alive.length; i++) {
+    const a = alive[i];
+    for (let j = i + 1; j < alive.length; j++) {
+      const b = alive[j], dx = b.x - a.x; if (dx > D) break;
+      const dy = b.y - a.y; if (dy > D || dy < -D) continue;
+      const d2 = dx * dx + dy * dy; if (d2 >= D * D || d2 === 0) continue;
+      const d = Math.sqrt(d2), nx = dx / d, ny = dy / d, ov = (D - d) / 2;
+      a.x -= nx * ov; a.y -= ny * ov; b.x += nx * ov; b.y += ny * ov;
+      const vr = (b.vx - a.vx) * nx + (b.vy - a.vy) * ny;
+      if (vr < 0) { const jj = -(1 + E_F) * vr / 2; a.vx -= jj * nx; a.vy -= jj * ny; b.vx += jj * nx; b.vy += jj * ny;
+        if (jj > 60) { a.av += (Math.random() - 0.5) * 5; b.av += (Math.random() - 0.5) * 5; }
+        if (jj > 260 && performance.now() - lastGrunt > 900 && Math.random() < 0.45) {
+          lastGrunt = performance.now();
+          const collisionEmotions = ["anger", "cry", "shock", "fire"];
+          const emo = collisionEmotions[Math.floor(Math.random() * collisionEmotions.length)];
+          emote(emo, (a.x + b.x) / 2, (a.y + b.y) / 2, {life: 0.8, size: 34});
+          a.av += (Math.random() - 0.5) * 9; b.av += (Math.random() - 0.5) * 9;
+        } }
+    }
+  }
+  // The moving opening is the only exit; crossing it eliminates a flag.
+  const inner = RR - TH / 2 - radius, escaped = [];
+  for (const f of alive) {
+    const dx = f.x - CX, dy = f.y - CY, d = Math.hypot(dx, dy);
+    if (d > inner) {
+      const ang = Math.atan2(dy, dx);
+      const inGap = Math.abs(angDiff(ang, gapA)) <= GAP_HALF;
+      if (!inGap && d < RR + radius) {
+        const nx = dx / d, ny = dy / d, vn = f.vx * nx + f.vy * ny;
+        f.x = CX + nx * inner; f.y = CY + ny * inner;
+        if (vn > 0) {
+          const out = Math.max(vn * E_W, MINB * (0.8 + Math.random() * 0.4));
+          f.vx -= (vn + out) * nx; f.vy -= (vn + out) * ny;
+          f.vx += -ny * (Math.random() - 0.5) * 80; f.vy += nx * (Math.random() - 0.5) * 80;
+          f.av += (Math.random() - 0.5) * 6;
+          if (vn > 140) sBounce();
+        }
+      } else {
+        for (const s of [-1, 1]) {
+          const ea = gapA + s * GAP_HALF, ex = CX + RR * Math.cos(ea), ey = CY + RR * Math.sin(ea);
+          const qx = f.x - ex, qy = f.y - ey, qd = Math.hypot(qx, qy), md = radius + TH / 2;
+          if (qd < md && qd > 0) { const nx = qx / qd, ny = qy / qd; f.x = ex + nx * md; f.y = ey + ny * md;
+            const vn = f.vx * nx + f.vy * ny; if (vn < 0) { f.vx -= 1.9 * vn * nx; f.vy -= 1.9 * vn * ny; sBounce(); } }
+        }
+      }
+    }
+    if (d > RR + radius + 6) escaped.push(f);
+  }
+  for (const f of escaped) { if (alive.length <= 1) break; capture(f); }
+}
+function capture(f) {
+  const i = alive.indexOf(f); if (i < 0) return;
+  alive.splice(i, 1);
+  f.state = "drop"; f.t = 0;
+  f.slot = elimCount++;
+  const [sx, sy] = slotPos(f.slot);
+  f.px = [f.x, f.x, sx, sx]; f.py = [f.y, f.y - 120, sy - 260, sy];
+  f.sc = 0.2; f.spin = (Math.random() < 0.5 ? -1 : 1) * (6 + Math.random() * 6); f.a = 0;
+  anims.push(f); sExit();
+  const emo = pickEmotion();
+  emote(emo, f.x, f.y - 10, {size: 46});
+  announceFlag(f.ct.n, emo);
+  // Scoring
+  combo++;
+  if (combo > maxCombo) maxCombo = combo;
+  score += 10 * combo * difficultyLevel;
+}
+function slotPos(i) { return [GRID.x + (i % GRID.cols) * GRID.cw + GRID.cw / 2, GRID.y + Math.floor(i / GRID.cols) * GRID.ch + GRID.ch / 2]; }
+function bez(p0, p1, p2, p3, t) { const u = 1 - t; return u * u * u * p0 + 3 * u * u * t * p1 + 3 * u * t * t * p2 + t * t * t * p3; }
+
+function updateAnims(dt) {
+  for (const f of anims) {
+    f.t += dt;
+    if (f.state === "drop") {
+      const u = Math.min(1, f.t / 1.15), ue = 0.35 * u + 0.65 * u * u;
+      f.x = bez(...f.px, ue); f.y = bez(...f.py, ue);
+      f.sc = 0.2 + (GRID.fw / (FW * flagScale) - 0.2) * Math.min(1, u * 1.6);
+      f.a = (1 - u) * (1 - u) * f.spin;
+      if (u >= 1) { f.state = "done"; done.push(f); sLand();
+        for (let k = 0; k < 6; k++) { const a = Math.random() * 6.28; particles.push({x: f.x, y: f.y, vx: Math.cos(a) * 90, vy: Math.sin(a) * 90, life: 0.35, t: 0, c: "#fff"}); } }
+    }
+  }
+  anims = anims.filter(f => f.state !== "done");
+}
+function updateFx(dt) {
+  for (const p of particles) { p.t += dt; p.x += p.vx * dt; p.y += p.vy * dt; p.vx *= 0.96; p.vy *= 0.96; }
+  particles = particles.filter(p => p.t < p.life);
+  for (const r of reactions) r.t += dt;
+  reactions = reactions.filter(r => r.t < r.life);
+  for (const c of confetti) { c.t += dt; c.vy += 260 * dt; c.vx *= 0.99; c.x += c.vx * dt; c.y += c.vy * dt; c.rot += c.vr * dt; }
+  confetti = confetti.filter(c => c.y < H + 40);
+}
+
+function declareWinner() {
+  phase = "winner"; winner = alive[0]; winner.state = "winner"; winT = 0;
+  winner.sx = winner.x; winner.sy = winner.y;
+  winners.unshift({ct: winner.ct, round});
+  speechQueue.length = 0;
+  if ("speechSynthesis" in window) speechSynthesis.cancel();
+  activeSpeech = null;
+  sFanfare();
+  // Random funny emotion for winner
+  const winnerEmotions = ["smile", "laugh", "cool", "love", "party", "star"];
+  const winnerEmo = winnerEmotions[Math.floor(Math.random() * winnerEmotions.length)];
+  emote(winnerEmo, CX, CY - 70, {life: 2.0, size: 100});
+  // Funny reactions from eliminated flags
+  const runners = done.slice(-4);
+  const runnerEmotions = ["cry", "anger", "shock", "fire"];
+  runners.forEach((f, i) => {
+    setTimeout(() => {
+      const emo = runnerEmotions[Math.floor(Math.random() * runnerEmotions.length)];
+      emote(emo, f.x, f.y - 30, {life: 1.4, size: 40});
+    }, 500 + i * 350);
+  });
+  const cols = ["#ff3d6e", "#ffd23f", "#2bffe4", "#7c5cff", "#ffffff", "#5bff7a", "#ff9a3c"];
+  for (let i = 0; i < 180; i++) confetti.push({x: CX + (Math.random() - 0.5) * 200, y: CY - 100, vx: (Math.random() - 0.5) * 900, vy: -300 - Math.random() * 700,
+    rot: Math.random() * 6, vr: (Math.random() - 0.5) * 14, c: cols[i % cols.length], w: 6 + Math.random() * 6, h: 4 + Math.random() * 4, t: 0});
+  const tok = ++roundToken, name = winner.ct.n;
+  setTimeout(() => {
+    if (tok !== roundToken) return;
+    say(`Round ${round} winner: ${name}!`, () => {
+      if (tok !== roundToken) return;
+      if (infiniteMode) {
+        setTimeout(() => {
+          if (tok === roundToken) nextRound();
+        }, 2000);
+      } else {
+        showLike = true; likeT = 0; tone(880, 0.12, "sine", 0.1); tone(1320, 0.2, "sine", 0.1, null, 0.1);
+        say("Please like, subscribe, and share. Get ready for the next round!", () => {
+          if (tok === roundToken) nextRound();
+        });
+      }
+    });
+  }, 900);
+}
+
+/* ======================= DRAWING ======================= */
+function txt(s, x, y, size, color, align = "center", weight = 800, spacing = 0, maxW = 0) {
+  ctx.font = `${weight} ${size}px ${FONT}`;
+  if (maxW) { while (size > 8 && ctx.measureText(s).width + spacing * s.length > maxW) { size -= 1; ctx.font = `${weight} ${size}px ${FONT}`; } }
+  if ("letterSpacing" in ctx) ctx.letterSpacing = spacing + "px";
+  ctx.textAlign = align; ctx.textBaseline = "middle"; ctx.fillStyle = color; ctx.fillText(s, x, y);
+  if ("letterSpacing" in ctx) ctx.letterSpacing = "0px";
+}
+function ellipsize(s, maxW, size, weight = 700) {
+  ctx.font = `${weight} ${size}px ${FONT}`;
+  if (ctx.measureText(s).width <= maxW) return s;
+  while (s.length > 1 && ctx.measureText(s + "…").width > maxW) s = s.slice(0, -1);
+  return s + "…";
+}
+function drawFlag(tex, x, y, w, h, ang, wave, ph, alpha = 1) {
+  ctx.save(); ctx.translate(x, y); ctx.rotate(ang); ctx.globalAlpha = alpha;
+  ctx.fillStyle = "rgba(0,0,0,0.22)"; ctx.fillRect(-w / 2 + 2, -h / 2 + 3, w, h);
+  if (!wave) ctx.drawImage(tex.cv, -w / 2, -h / 2, w, h);
+  else {
+    const n = Math.max(6, Math.min(32, Math.round(w / 5))), sw = w / n, sws = tex.cv.width / n, k = 5.4 / n;
+    for (let i = 0; i < n; i++) {
+      const dy = Math.sin(T * 7 + ph - i * k) * h * (w > 60 ? 0.05 : 0.09) * (i / (n - 1) + 0.15);
+      ctx.drawImage(tex.cv, i * sws, 0, sws, tex.cv.height, -w / 2 + i * sw, -h / 2 + dy, sw + 0.8, h);
+    }
+  }
+  ctx.restore();
+}
+function panel(x, y, w, h, r = 26) {
+  ctx.save(); ctx.shadowColor = pal.border; ctx.shadowBlur = 22;
+  rr(ctx, x, y, w, h, r); const g = ctx.createLinearGradient(0, y, 0, y + h);
+  g.addColorStop(0, pal.panel); g.addColorStop(1, "#00000088"); ctx.fillStyle = g; ctx.fill();
+  ctx.restore(); rr(ctx, x, y, w, h, r); ctx.lineWidth = 4; ctx.strokeStyle = pal.border; ctx.stroke();
+}
+const BTN = {
+  pause: [30, 1150, 90, 42], sound: [130, 1150, 110, 42], speed: [250, 1150, 82, 42],
+  boost: [342, 1150, 96, 42], sizeDown: [448, 1150, 48, 42],
+  sizeValue: [501, 1150, 90, 42], sizeUp: [596, 1150, 43, 42],
+  angry: [30, 1200, 80, 42], cry: [120, 1200, 80, 42], smile: [210, 1200, 80, 42],
+  addFlag: [300, 1200, 80, 42], difficulty: [390, 1200, 100, 42], infinite: [500, 1200, 130, 42]
+};
+function button(b, label) {
+  const [x, y, w, h] = b;
+  panel(x, y, w, h, 24);
+  const fontSize = w <= 60 ? 15 : w <= 100 ? 18 : w <= 145 ? 17 : 19;
+  txt(label, x + w / 2, y + h / 2 + 1, fontSize, "#fff", "center", 800, 1, w - 12);
+}
+function drawBoostButton() {
+  const [x, y, w, h] = BTN.boost;
+  const ready = boostCooldown <= 0 && phase === "play";
+  const active = boostT > 0;
+  button(BTN.boost, active ? "TURBO!" : boostCooldown > 0 ? `WAIT ${Math.ceil(boostCooldown)}` : "BOOST");
+  const progress = active ? boostT / BOOST_DURATION : boostCooldown > 0 ? 1 - boostCooldown / BOOST_COOLDOWN : 1;
+  rr(ctx, x + 10, y + h - 8, w - 20, 4, 2);
+  ctx.fillStyle = "rgba(255,255,255,0.2)"; ctx.fill();
+  rr(ctx, x + 10, y + h - 8, (w - 20) * Math.max(0, Math.min(1, progress)), 4, 2);
+  ctx.fillStyle = ready || active ? pal.accent : "rgba(255,255,255,0.55)"; ctx.fill();
+}
+
+function drawBG() {
+  const g = ctx.createRadialGradient(CX, CY, 50, CX, CY, 900);
+  g.addColorStop(0, pal.bg[1]); g.addColorStop(1, pal.bg[0]);
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  for (const s of stars) { ctx.globalAlpha = 0.55 + 0.45 * Math.sin(T * 2 + s.p); ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(s.x, s.y, s.r + 0.5, 0, 6.29); ctx.fill(); }
+  ctx.globalAlpha = 1;
+}
+function drawTop() {
+  // winners
+  panel(30, 18, 404, 190);
+  txt("WINNERS", 232, 44, 24, "#fff", "center", 800, 5);
+  const list = winners.slice(0, 6);
+  if (!list.length) txt("No winners yet", 232, 118, 17, "rgba(255,255,255,0.7)", "center", 600);
+  list.forEach((w, i) => {
+    const col = i % 2, row = (i / 2) | 0, x = 48 + col * 192, y = 80 + row * 38;
+    const [fw, fh] = dims(w.ct.tex, 38, 26);
+    drawFlag(w.ct.tex, x + 19, y, fw, fh, 0, false, 0);
+    txt(ellipsize(w.ct.n, 110, 15), x + 44, y - 6, 15, "#fff", "left", 700);
+    txt("ROUND " + w.round, x + 44, y + 10, 10, pal.accent, "left", 800, 1);
+  });
+  // flags left
+  panel(456, 18, 234, 190);
+  txt("FLAGS", 573, 42, 24, "#fff", "center", 800, 5);
+  txt("LEFT", 573, 68, 24, "#fff", "center", 800, 5);
+  ctx.save(); ctx.shadowColor = "rgba(0,0,0,0.6)"; ctx.shadowOffsetY = 5; ctx.shadowBlur = 0;
+  txt(String(alive.length), 573, 116, 68, pal.accent, "center", 900); ctx.restore();
+  txt("OF " + roundFlagTotal, 573, 150, 20, "rgba(255,255,255,0.95)", "center", 600, 4);
+  const left = alive.length;
+  rr(ctx, 474, 184, 198, 9, 4.5); ctx.fillStyle = "rgba(255,255,255,0.2)"; ctx.fill();
+  rr(ctx, 474, 184, Math.max(9, 198 * left / roundFlagTotal), 9, 4.5); ctx.fillStyle = pal.accent; ctx.fill();
+  // buttons
+  button(BTN.pause, phase === "start" ? "RUN" : paused ? "RESUME" : "PAUSE");
+  button(BTN.sound, soundOn ? "SOUND ON" : "SOUND OFF");
+  button(BTN.speed, speed + "×");
+  drawBoostButton();
+  button(BTN.sizeDown, "SIZE-");
+  button(BTN.sizeValue, "FLAG " + flagScale.toFixed(2) + "x");
+  button(BTN.sizeUp, "SIZE+");
+  button(BTN.angry, "😡");
+  button(BTN.cry, "😭");
+  button(BTN.smile, "😄");
+  button(BTN.addFlag, "+FLAG");
+  button(BTN.difficulty, difficulty.toUpperCase());
+  button(BTN.infinite, infiniteMode ? "∞ ON" : "∞ OFF");
+}
+function drawArena() {
+  // Inner arena and the single moving exit.
+  const g = ctx.createRadialGradient(CX, CY, 40, CX, CY, RR);
+  g.addColorStop(0, "rgba(255,255,255,0.12)"); g.addColorStop(1, "rgba(0,0,0,0.35)");
+  ctx.fillStyle = g; ctx.beginPath(); ctx.arc(CX, CY, RR, 0, 6.29); ctx.fill();
+  ctx.save(); ctx.lineCap = "round";
+  const drawRing = () => {
+    ctx.beginPath();
+    ctx.arc(CX, CY, RR, gapA + GAP_HALF, gapA - GAP_HALF + Math.PI * 2);
+    ctx.stroke();
+  };
+  ctx.shadowColor = pal.glow; ctx.shadowBlur = 40;
+  ctx.strokeStyle = pal.glow; ctx.globalAlpha = 0.75; ctx.lineWidth = TH + 14;
+  drawRing();
+  ctx.globalAlpha = 1; ctx.shadowBlur = 18; ctx.lineWidth = TH + 4; ctx.strokeStyle = pal.border;
+  drawRing();
+  ctx.shadowBlur = 0; ctx.lineWidth = TH + 2; ctx.strokeStyle = "#000";
+  drawRing();
+  ctx.lineWidth = TH - 2; ctx.strokeStyle = "#ffffff";
+  drawRing();
+  ctx.fillStyle = pal.accent;
+  for (const s of [-1, 1]) {
+    const ea = gapA + s * GAP_HALF, ex = CX + RR * Math.cos(ea), ey = CY + RR * Math.sin(ea);
+    ctx.beginPath(); ctx.arc(ex, ey, TH / 2, 0, Math.PI * 2); ctx.fill();
+  }
+  ctx.restore();
+}
+function drawGrid() {
+  txt("FLAGS ELIMINATED", 30, 960, 18, "#fff", "left", 800, 2);
+  txt("ROUND " + round, CX, 960, 15, pal.accent, "center", 800, 2);
+  txt(`${elimCount} / ${roundFlagTotal - 1}`, 690, 960, 18, "#fff", "right", 800, 2);
+  txt(`SCORE: ${score}`, 30, 984, 14, pal.accent, "left", 800, 1);
+  txt(`COMBO: ${combo}x`, 690, 984, 14, "#fff", "right", 800, 1);
+  for (const f of done) { const [x, y] = slotPos(f.slot), [w, h] = dims(f.ct.tex, GRID.fw, GRID.fh); drawFlag(f.ct.tex, x, y, w, h, 0, false, 0); }
+}
+function drawSearch() {
+  if (!showSearch) return;
+  ctx.fillStyle = "rgba(0,0,0,0.85)";
+  ctx.fillRect(0, 0, W, H);
+  panel(CX - 200, 150, 400, 500, 30);
+  txt("ADD COUNTRY FLAG", CX, 190, 26, pal.accent, "center", 900, 2);
+  // Input box
+  rr(ctx, CX - 180, 220, 360, 50, 12);
+  ctx.fillStyle = "#111";
+  ctx.fill();
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = pal.border;
+  ctx.stroke();
+  txt("Search country name, then tap a result", CX, 248, 14, "rgba(255,255,255,0.55)", "center", 600);
+  // Results
+  if (searchResults.length === 0 && searchInput.length >= 2) {
+    txt("No countries found", CX, 350, 18, "rgba(255,255,255,0.5)", "center", 600);
+  } else if (searchInput.length < 2) {
+    txt("Type at least 2 characters", CX, 350, 18, "rgba(255,255,255,0.5)", "center", 600);
+  }
+  searchResults.forEach((ct, i) => {
+    const y = 290 + i * 55;
+    if (y > 580) return;
+    panel(CX - 180, y, 360, 50, 10);
+    const [fw, fh] = dims(ct.tex, 36, 24);
+    drawFlag(ct.tex, CX - 160, y + 25, fw, fh, 0, false, 0);
+    txt(ct.n, CX - 115, y + 26, 18, "#fff", "left", 700);
+  });
+  panel(CX - 80, 590, 160, 45, 20);
+  txt("CLOSE", CX, 614, 18, "#fff", "center", 800);
+}
+function drawFx() {
+  for (const p of particles) { ctx.globalAlpha = 1 - p.t / p.life; ctx.fillStyle = p.c; ctx.beginPath(); ctx.arc(p.x, p.y, 2.5, 0, 6.29); ctx.fill(); }
+  ctx.globalAlpha = 1;
+  for (const c of confetti) { ctx.save(); ctx.translate(c.x, c.y); ctx.rotate(c.rot); ctx.fillStyle = c.c; ctx.fillRect(-c.w / 2, -c.h / 2, c.w, c.h); ctx.restore(); }
+  for (const r of reactions) {
+    const u = r.t / r.life, pop = u < 0.18 ? 0.55 + 0.45 * (u / 0.18) : 1 + 0.04 * Math.sin(r.t * 14);
+    ctx.save(); ctx.globalAlpha = u > 0.7 ? 1 - (u - 0.7) / 0.3 : 1;
+    ctx.translate(r.x, r.y - 95 * u); ctx.scale(pop, pop);
+    ctx.font = `${r.size}px ${EMOJI_FONT}`; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.fillText(r.emoji, 0, 0); ctx.restore();
+  }
+  ctx.globalAlpha = 1;
+}
+function outlined(s, x, y, size, fill, maxW) {
+  ctx.save(); ctx.font = `900 ${size}px ${FONT}`;
+  while (maxW && size > 12 && ctx.measureText(s).width > maxW) { size -= 2; ctx.font = `900 ${size}px ${FONT}`; }
+  ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.lineJoin = "round";
+  ctx.lineWidth = Math.max(4, size / 7); ctx.strokeStyle = "#000"; ctx.strokeText(s, x, y);
+  ctx.fillStyle = fill; ctx.fillText(s, x, y); ctx.restore();
+}
+function drawWinner() {
+  if (!winner) return;
+  const u = Math.min(1, winT / 1.2), e = 1 - Math.pow(1 - u, 3);
+  const x = winner.sx + (CX - winner.sx) * e, y = winner.sy + (CY - 10 - winner.sy) * e;
+  const [bw, bh] = dims(winner.ct.tex, 190 * flagScale, 150 * flagScale), sc = 0.18 + 0.82 * e;
+  // rays
+  ctx.save(); ctx.translate(x, y); ctx.rotate(T * 0.6); ctx.globalAlpha = 0.28 * e;
+  for (let i = 0; i < 14; i++) { ctx.rotate(Math.PI * 2 / 14); ctx.fillStyle = i % 2 ? pal.accent : "#fff";
+    ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(-22, -280); ctx.lineTo(22, -280); ctx.closePath(); ctx.fill(); }
+  ctx.restore(); ctx.globalAlpha = 1;
+  ctx.save(); ctx.shadowColor = pal.accent; ctx.shadowBlur = 40 * e;
+  drawFlag(winner.ct.tex, x, y, bw * sc, bh * sc, Math.sin(T * 2) * 0.05 * e, true, winner.ph); ctx.restore();
+  if (u > 0.4) {
+    const a = Math.min(1, (u - 0.4) / 0.4), pop = 1 + 0.08 * Math.sin(T * 6);
+    ctx.globalAlpha = a;
+    ctx.save(); ctx.translate(CX, CY - 175); ctx.scale(pop, pop); outlined("🏆 WINNER 🏆", 0, 0, 58, pal.accent); ctx.restore();
+    outlined(winner.ct.n.toUpperCase(), CX, CY + 130, 50, "#fff", 560);
+    if (infiniteMode) {
+      outlined(`∞ ROUND ${infiniteRound}`, CX, CY + 185, 28, pal.accent, 400);
+    }
+    ctx.globalAlpha = 1;
+  }
+  if (showLike && !infiniteMode) {
+    likeT += 1 / 60;
+    const a = Math.min(1, likeT * 3), b = 1 + 0.05 * Math.sin(T * 7);
+    ctx.save(); ctx.globalAlpha = a; ctx.translate(CX, CY + 222); ctx.scale(b * (0.6 + 0.4 * a), b * (0.6 + 0.4 * a));
+    rr(ctx, -300, -58, 600, 116, 26); ctx.fillStyle = "rgba(0,0,0,0.78)"; ctx.fill(); ctx.lineWidth = 4; ctx.strokeStyle = pal.accent; ctx.stroke();
+    outlined("HIT LIKE & SUBSCRIBE", 0, -24, 34, "#fff", 560);
+    outlined("LIKE · SUBSCRIBE · SHARE", 0, 8, 22, pal.accent, 560);
+    rr(ctx, -228, 24, 150, 28, 14); ctx.fillStyle = "#1f6fff"; ctx.fill(); txt("👍 LIKE", -153, 39, 16, "#fff", "center", 900);
+    rr(ctx, -50, 24, 180, 28, 14); ctx.fillStyle = "#ff1f1f"; ctx.fill(); txt("SUBSCRIBE", 40, 39, 16, "#fff", "center", 900, 1);
+    rr(ctx, 150, 24, 70, 28, 14); ctx.fillStyle = "#ffffff"; ctx.fill(); txt("🔔", 185, 39, 16, "#000", "center", 900);
+    ctx.restore();
+  }
+}
+function drawOverlay() {
+  if (phase === "start") {
+    ctx.fillStyle = "rgba(0,0,0,0.3)"; ctx.fillRect(0, 0, W, H);
+    outlined("BOOST", CX, 460, 82, pal.accent);
+    outlined("FLAG", CX, 545, 82, "#fff");
+    outlined("RUSH", CX, 625, 76, pal.accent);
+    const p = 1 + 0.05 * Math.sin(T * 5);
+    ctx.save(); ctx.translate(CX, 770); ctx.scale(p, p); panel(-170, -40, 340, 80, 40); txt("TAP TO START", 0, 1, 28, "#fff", "center", 900, 3); ctx.restore();
+    txt(`${TOTAL} country flags · last flag standing wins`, CX, 835, 18, "rgba(255,255,255,0.95)", "center", 600, 0, 650);
+    txt("Tap BOOST to turbo-charge the arena · double-tap for fullscreen", CX, 855, 15, pal.glow, "center", 700);
+    txt("Escape through the moving gap to be eliminated!", CX, 880, 14, "rgba(255,255,255,0.9)", "center", 700);
+    txt("Add flags with +FLAG (F key) · 6 difficulty levels (D key) · Infinite mode (I key)", CX, 905, 14, "#fff", "center", 700, 0, 680);
+    txt("Funny reactions: tap emojis or press Z/X/C · tap a flag to tease it", CX, 930, 14, pal.accent, "center", 700, 0, 680);
+    txt(`Loading flags ${Math.min(loaded, TOTAL)}/${TOTAL}`, CX, 955, 14, "rgba(255,255,255,0.8)", "center", 600);
+  } else if (phase === "count") {
+    const n = Math.ceil(cdT - 0.2), fr = cdT - Math.floor(cdT);
+    const label = n >= 1 ? String(n) : "GO!";
+    ctx.save(); ctx.translate(CX, CY); const s = 0.8 + fr * 0.6; ctx.scale(s, s);
+    outlined(label, 0, 0, n >= 1 ? 160 : 120, pal.accent); ctx.restore();
+    outlined("ROUND " + round, CX, CY - 150, 44, "#fff");
+    txt(`${pal.name} THEME · ${difficulty.toUpperCase()} DIFFICULTY`, CX, CY + 130, 18, "#fff", "center", 800, 3);
+    if (infiniteMode) {
+      txt(`∞ INFINITE MODE · ROUND ${infiniteRound}`, CX, CY + 155, 14, pal.accent, "center", 800, 2);
+    }
+  }
+  if (paused && phase !== "start") { ctx.fillStyle = "rgba(0,0,0,0.3)"; ctx.fillRect(0, 340, W, 620); outlined("PAUSED", CX, CY, 70, "#fff"); }
+}
+
+function draw() {
+  ctx.setTransform(S * DPR, 0, 0, S * DPR, 0, 0);
+  drawBG(); drawTop(); drawArena();
+  for (const f of alive) { if (f.state === "winner") continue; const [w, h] = dims(f.ct.tex, FW * flagScale, FH * flagScale); drawFlag(f.ct.tex, f.x, f.y, w, h, f.a, true, f.ph); }
+  drawGrid();
+  for (const f of anims) if (f.state === "drop") { const [w, h] = dims(f.ct.tex, FW * flagScale, FH * flagScale); drawFlag(f.ct.tex, f.x, f.y, w * f.sc, h * f.sc, f.a, false, 0); }
+  if (phase === "winner") { ctx.fillStyle = "rgba(0,0,0,0.35)"; ctx.beginPath(); ctx.arc(CX, CY, RR - 6, 0, 6.29); ctx.fill(); drawWinner(); }
+  drawFx(); drawOverlay();
+  if (showSearch) drawSearch();
+}
+
+/* ======================= LOOP ======================= */
+let last = performance.now();
+function tick(dt) {
+  T += dt;
+  if (paused) return;
+  const sim = dt * speed;
+  if (phase === "play") {
+    boostT = Math.max(0, boostT - dt);
+    boostCooldown = Math.max(0, boostCooldown - dt);
+  }
+  if (phase === "play") {
+    const n = Math.ceil(4 * speed), sdt = sim / n;
+    for (let i = 0; i < n; i++) step(sdt);
+    if (alive.length === 1) declareWinner();
+  }
+  if (phase === "count") {
+    cdT -= dt; const n = Math.ceil(cdT - 0.2);
+    if (n < lastCd) { lastCd = n; sBeep(n >= 1 ? 660 : 990); }
+    if (cdT <= 0) phase = "play";
+  }
+  if (phase === "winner") winT += dt;
+  updateAnims(sim); updateFx(sim);
+}
+function frame(now) {
+  const dt = Math.min(0.033, (now - last) / 1000); last = now;
+  tick(dt); draw(); requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+
+/* ======================= INPUT ======================= */
+function hit(b, x, y) { return x >= b[0] && x <= b[0] + b[2] && y >= b[1] && y <= b[1] + b[3]; }
+const BOOST_DURATION = 2.6, BOOST_COOLDOWN = 11;
+let boostT = 0, boostCooldown = 0;
+function triggerBoost() {
+  if (phase !== "play" || paused || boostCooldown > 0) return;
+  boostT = BOOST_DURATION;
+  boostCooldown = BOOST_COOLDOWN;
+  const burst = 300;
+  for (const f of alive) {
+    const a = gapA + (Math.random() - 0.5) * GAP_HALF;
+    f.vx += Math.cos(a) * burst;
+    f.vy += Math.sin(a) * burst;
+    const v = Math.hypot(f.vx, f.vy);
+    if (v > MAXV) { f.vx *= MAXV / v; f.vy *= MAXV / v; }
+  }
+  tone(260, 0.32, "sawtooth", 0.13, 920);
+  tone(520, 0.24, "triangle", 0.08, 1040, 0.05);
+  for (let i = 0; i < 4; i++) emote("anger", CX + (Math.random() - 0.5) * RR * 1.4, CY + (Math.random() - 0.5) * RR * 1.4, {life: 0.9, size: 42});
+  speak("BOOST ACTIVATED! The arena is going turbo!");
+}
+function pressEmotion(kind) {
+  initAudio(); if (AC && AC.state === "suspended") AC.resume();
+  emote(kind, CX, CY - 60, {life: 1.5, size: 76});
+}
+function flagAt(x, y) {
+  const rr2 = Math.max(flagRadius() + 10, 26);
+  let best = null, bd = rr2 * rr2;
+  for (const f of alive) { const d = (f.x - x) ** 2 + (f.y - y) ** 2; if (d < bd) { bd = d; best = f; } }
+  return best;
+}
+countrySearch.addEventListener("input", () => {
+  searchInput = countrySearch.value.trimStart();
+  searchResults = searchCountries(searchInput);
+});
+cv.addEventListener("dblclick", () => {
+  const el = document.documentElement;
+  if (!document.fullscreenElement && el.requestFullscreen) el.requestFullscreen().catch(() => {});
+  else if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen();
+});
+cv.addEventListener("pointerdown", e => {
+  e.preventDefault();
+  const r = cv.getBoundingClientRect(), x = (e.clientX - r.left) / r.width * W, y = (e.clientY - r.top) / r.height * H;
+  initAudio(); if (AC && AC.state === "suspended") AC.resume();
+  if (showSearch) {
+    // Handle search close button
+    if (x >= CX - 80 && x <= CX + 80 && y >= 590 && y <= 635) {
+      closeSearch();
+      return;
+    }
+    // Handle search result selection
+    if (searchResults.length > 0) {
+      for (let i = 0; i < searchResults.length; i++) {
+        const ry = 290 + i * 55;
+        if (ry > 580) break;
+        if (x >= CX - 180 && x <= CX + 180 && y >= ry && y <= ry + 50) {
+          addCountryToCenter(searchResults[i]);
+          return;
+        }
+      }
+    }
+    return;
+  }
+  const onControl = Object.values(BTN).some(b => hit(b, x, y));
+  if (phase === "start" && !onControl) {
+    speak("Boost Flag Rush. Let's begin!"); startCountdown(); return;
+  }
+  if (hit(BTN.pause, x, y) && phase === "start") { speak("Boost Flag Rush. Let's begin!"); startCountdown(); return; }
+  if (hit(BTN.angry, x, y)) { pressEmotion("anger"); return; }
+  if (hit(BTN.cry, x, y)) { pressEmotion("cry"); return; }
+  if (hit(BTN.smile, x, y)) { pressEmotion("smile"); return; }
+  if (hit(BTN.boost, x, y)) { triggerBoost(); return; }
+  if (hit(BTN.sizeDown, x, y)) { adjustFlagScale(-0.25); return; }
+  if (hit(BTN.sizeUp, x, y)) { adjustFlagScale(0.25); return; }
+  if (hit(BTN.addFlag, x, y)) { if (phase !== "winner") openSearch(); return; }
+  if (hit(BTN.difficulty, x, y)) {
+    const difficulties = ["Easy", "Medium", "Hard", "Insane", "Nightmare", "Chaos"];
+    const idx = difficulties.indexOf(difficulty);
+    difficulty = difficulties[(idx + 1) % difficulties.length];
+    difficultyLevel = difficulties.indexOf(difficulty) + 1;
+    applyDifficulty();
+    speak(`Difficulty set to ${difficulty}!`);
+    return;
+  }
+  if (hit(BTN.infinite, x, y)) {
+    infiniteMode = !infiniteMode;
+    infiniteRound = 0;
+    speak(infiniteMode ? "Infinite mode activated! Endless rounds with increasing difficulty!" : "Infinite mode deactivated!");
+    return;
+  }
+  if (hit(BTN.pause, x, y)) togglePause();
+  else if (hit(BTN.sound, x, y)) toggleSound();
+  else if (hit(BTN.speed, x, y)) speed = speed === 1 ? 2 : speed === 2 ? 3 : 1;
+  else if (!paused && phase === "play") {
+    const f = flagAt(x, y);
+    if (f) {
+      const kind = pickEmotion();
+      emote(kind, f.x, f.y - 14, {life: 1, size: 40});
+      f.av += (Math.random() - 0.5) * 14;
+      f.vx += (Math.random() - 0.5) * 140; f.vy -= 90 + Math.random() * 90;
+    }
+  }
+});
+function togglePause() { paused = !paused; if ("speechSynthesis" in window) paused ? speechSynthesis.pause() : speechSynthesis.resume(); }
+function toggleSound() {
+  soundOn = !soundOn;
+  if (master) master.gain.value = soundOn ? 0.8 : 0;
+  if (!soundOn && "speechSynthesis" in window) { speechQueue.length = 0; speechSynthesis.cancel(); activeSpeech = null; }
+}
+addEventListener("keydown", e => {
+  if (showSearch) {
+    if (e.key === "Escape") { closeSearch(); return; }
+    if (e.target === countrySearch && e.key !== "Enter") return;
+    if (e.key === "Backspace") { searchInput = searchInput.slice(0, -1); searchResults = searchCountries(searchInput); return; }
+    if (e.key === "Enter" && searchResults.length > 0) { e.preventDefault(); addCountryToCenter(searchResults[0]); return; }
+    if (e.target === countrySearch) return;
+    if (e.key.length === 1) { searchInput += e.key; searchResults = searchCountries(searchInput); return; }
+    return;
+  }
+  if (e.code === "Space") { e.preventDefault(); if (phase === "start") { initAudio(); if (AC && AC.state === "suspended") AC.resume(); speak("Boost Flag Rush. Let's begin!"); startCountdown(); } else togglePause(); }
+  if (e.key === "+" || e.key === "=") adjustFlagScale(0.25);
+  if (e.key === "-" || e.key === "_") adjustFlagScale(-0.25);
+  if (e.key === "m" || e.key === "M") toggleSound();
+  if (e.key === "b" || e.key === "B") triggerBoost();
+  if (e.key === "z" || e.key === "Z") pressEmotion("anger");
+  if (e.key === "x" || e.key === "X") pressEmotion("cry");
+  if (e.key === "c" || e.key === "C") pressEmotion("smile");
+  if (e.key === "1" || e.key === "2" || e.key === "3") speed = +e.key;
+  if (e.key === "f" || e.key === "F") { if (phase !== "winner") openSearch(); }
+  if (e.key === "d" || e.key === "D") {
+    const difficulties = ["Easy", "Medium", "Hard", "Insane", "Nightmare", "Chaos"];
+    const idx = difficulties.indexOf(difficulty);
+    difficulty = difficulties[(idx + 1) % difficulties.length];
+    difficultyLevel = difficulties.indexOf(difficulty) + 1;
+    applyDifficulty();
+    speak(`Difficulty set to ${difficulty}!`);
+  }
+  if (e.key === "i" || e.key === "I") {
+    infiniteMode = !infiniteMode;
+    infiniteRound = 0;
+    speak(infiniteMode ? "Infinite mode activated! Endless rounds with increasing difficulty!" : "Infinite mode deactivated!");
+  }
+});
+
+/* test hook: fast-forward simulation */
+window.__ff = secs => { const n = Math.round(secs * 60); for (let i = 0; i < n && phase === "play"; i++) tick(1 / 60); return {alive: alive.length, elim: elimCount, t: roundT.toFixed(1), phase}; };
+window.__state = () => ({phase, round, alive: alive.length, elim: elimCount, done: done.length, winners: winners.map(w => w.ct.n), flagScale, boostT, boostCooldown, loaded, total: TOTAL});
+window.__emote = kind => pressEmotion(kind);
+</script>
+</body>
+</html>
