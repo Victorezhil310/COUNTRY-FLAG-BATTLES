@@ -1,0 +1,21 @@
+# GitHub Pages builds docs/ with Jekyll. This turns the build into a plain copy:
+# no theme, no plugins, so nothing rewrites or collides with the files we ship.
+theme: null
+plugins: []
+
+title: "Boost Flag Rush — Country Flag Arena"
+description: "196 country flags in one neon arena with a single moving gap. Play free, or install the Android app."
+baseurl: "/COUNTRY-FLAG-BATTLES"
+url: "https://victorezhil310.github.io"
+
+# Files without front matter are normally copied anyway; naming them removes any doubt.
+include:
+  - google8886a45a486e8c72.html
+  - ads.txt
+  - robots.txt
+  - sitemap.xml
+  - site.css
+
+exclude:
+  - Gemfile
+  - vendor
