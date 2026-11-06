@@ -60,5 +60,6 @@ cannot recover the app. Back both up outside this machine.
 
 ## Web deploy
 
-`docs/` is a self-contained static build, so any free static host works — GitHub Pages pointed at
-the `docs/` folder on the `main` branch is enough. Double-tap the canvas for fullscreen.
+Live at https://victorezhil.github.io/COUNTRY-FLAG-BATTLES-/ — GitHub Pages serving the `docs/`
+folder from `main`. `docs/` is a self-contained static build (game + 196 flags + font), so it works
+with no CDN and no network beyond the initial page load. Double-tap the canvas for fullscreen.
