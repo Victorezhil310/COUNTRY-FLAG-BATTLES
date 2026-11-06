@@ -50,6 +50,33 @@ the **upload key**: Play App Signing holds the real signing key, so if you lose 
 can reset it in the Console, but if you lose the *account* key before enabling Play App Signing you
 cannot recover the app. Back both up outside this machine.
 
+## Size — nowhere near any Play limit
+
+| Artifact | Size | Use |
+|---|---|---|
+| `release/BoostFlagRush-v1.aab` | 616 KB | upload this to Play Console |
+| `release/BoostFlagRush-v1.apk` | 603 KB | sideload for testing only; universal, signed with the same upload key |
+
+The 100 MB figure is Play's **legacy single-APK cap**, and it does not bind an app published as a bundle. Bundles
+get a far larger allowance (roughly 200 MB compressed for the base module, more via install-time feature
+modules). At 0.6 MB this app is about 300× under even the APK cap, which is a download-conversion advantage —
+there is no reason to add bulk to reach any number.
+
+Rebuild the APK with:
+
+```bash
+java -jar bundletool.jar build-apks --bundle=release/BoostFlagRush-v1.aab \
+  --output=app.apks --mode=universal \
+  --ks android/keystore/upload.jks --ks-pass pass:<password> \
+  --ks-key-alias boostflagrush-upload --key-pass pass:<password>
+```
+
+## Search Console
+
+`docs/` carries both verification methods: the `google8886a45a486e8c72.html` file and a
+`google-site-verification` meta tag on every web page. The tag is deliberately stripped from the Android asset
+copy by `tools/port_to_android.js` — Google crawls the site, not the app binary.
+
 ## Google Play checklist
 
 1. Upload `app-release.aab` to a new release in Play Console (Android 16 / API 36 is the current

@@ -98,6 +98,12 @@ sub(
 "sound-off stops native speech");
 
 if (html === before) throw new Error("nothing changed");
+
+// Search Console crawls the website, never the app binary, so the verification tag
+// would just be dead weight inside assets.
+html = html.replace(/\n<meta name="google-site-verification"[^>]*>/, "");
+console.log("ok: stripped search-console verification meta");
+
 fs.writeFileSync(dst, html);
 console.log("\nwrote", dst, (html.length / 1024).toFixed(1) + " KB");
 console.log("remaining remote URLs:", (html.match(/https?:\/\/[^"'`\s]+/g) || []).filter(u => !u.includes("www.w3.org")).join(" ") || "none");
