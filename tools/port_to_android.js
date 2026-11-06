@@ -2,7 +2,10 @@ const fs = require("fs");
 const path = require("path");
 
 const src = path.join(__dirname, "..", "index.html");
-const dst = path.join(__dirname, "..", "android", "app", "src", "main", "assets", "index.html");
+const forDocs = process.argv[2] === "docs";
+const dst = forDocs
+  ? path.join(__dirname, "..", "docs", "index.html")
+  : path.join(__dirname, "..", "android", "app", "src", "main", "assets", "index.html");
 let html = fs.readFileSync(src, "utf8");
 const before = html;
 
@@ -99,10 +102,12 @@ sub(
 
 if (html === before) throw new Error("nothing changed");
 
-// Search Console crawls the website, never the app binary, so the verification tag
+// Search Console crawls the website, never the app binary, so the verification tags
 // would just be dead weight inside assets.
-html = html.replace(/\n<meta name="google-site-verification"[^>]*>/, "");
-console.log("ok: stripped search-console verification meta");
+if (!forDocs) {
+  html = html.replace(/\n<meta name="google-site-verification"[^>]*>/g, "");
+  console.log("ok: stripped search-console verification metas");
+}
 
 fs.writeFileSync(dst, html);
 console.log("\nwrote", dst, (html.length / 1024).toFixed(1) + " KB");
