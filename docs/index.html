@@ -666,9 +666,10 @@ function ellipsize(s, maxW, size, weight = 700) {
 function drawFlag(tex, x, y, w, h, ang, wave, ph, alpha = 1) {
   ctx.save(); ctx.translate(x, y); ctx.rotate(ang); ctx.globalAlpha = alpha;
   ctx.fillStyle = "rgba(0,0,0,0.22)"; ctx.fillRect(-w / 2 + 2, -h / 2 + 3, w, h);
-  if (!wave) ctx.drawImage(tex.cv, -w / 2, -h / 2, w, h);
+  // Slicing a 34px flag into wave strips cost ~12ms a frame and the ripple was a pixel or two tall.
+  if (!wave || w < 48) ctx.drawImage(tex.cv, -w / 2, -h / 2, w, h);
   else {
-    const n = Math.max(6, Math.min(32, Math.round(w / 5))), sw = w / n, sws = tex.cv.width / n, k = 5.4 / n;
+    const n = Math.max(4, Math.min(32, Math.round(w / 5))), sw = w / n, sws = tex.cv.width / n, k = 5.4 / n;
     for (let i = 0; i < n; i++) {
       const dy = Math.sin(T * 7 + ph - i * k) * h * (w > 60 ? 0.05 : 0.09) * (i / (n - 1) + 0.15);
       ctx.drawImage(tex.cv, i * sws, 0, sws, tex.cv.height, -w / 2 + i * sw, -h / 2 + dy, sw + 0.8, h);
@@ -676,11 +677,26 @@ function drawFlag(tex, x, y, w, h, ang, wave, ph, alpha = 1) {
   }
   ctx.restore();
 }
+// ~16 panels are drawn per frame and each one carried a shadowBlur; bake each distinct
+// size once and blit it. Text is still drawn live on top, so labels stay correct.
+const PANEL_PAD = 26, panelCache = new Map();
 function panel(x, y, w, h, r = 26) {
-  ctx.save(); ctx.shadowColor = pal.border; ctx.shadowBlur = 22;
-  rr(ctx, x, y, w, h, r); const g = ctx.createLinearGradient(0, y, 0, y + h);
-  g.addColorStop(0, pal.panel); g.addColorStop(1, "#00000088"); ctx.fillStyle = g; ctx.fill();
-  ctx.restore(); rr(ctx, x, y, w, h, r); ctx.lineWidth = 4; ctx.strokeStyle = pal.border; ctx.stroke();
+  const key = pal.name + "|" + Math.round(w) + "x" + Math.round(h) + "|" + r;
+  let img = panelCache.get(key);
+  if (!img) {
+    img = document.createElement("canvas");
+    img.width = Math.round(w + PANEL_PAD * 2); img.height = Math.round(h + PANEL_PAD * 2);
+    const c = img.getContext("2d");
+    c.shadowColor = pal.border; c.shadowBlur = 22;
+    rr(c, PANEL_PAD, PANEL_PAD, w, h, r);
+    const g = c.createLinearGradient(0, PANEL_PAD, 0, PANEL_PAD + h);
+    g.addColorStop(0, pal.panel); g.addColorStop(1, "#00000088");
+    c.fillStyle = g; c.fill();
+    rr(c, PANEL_PAD, PANEL_PAD, w, h, r); c.lineWidth = 4; c.strokeStyle = pal.border; c.stroke();
+    if (panelCache.size > 60) panelCache.clear();
+    panelCache.set(key, img);
+  }
+  ctx.drawImage(img, x - PANEL_PAD, y - PANEL_PAD);
 }
 const BTN = {
   pause: [30, 1150, 90, 42], sound: [130, 1150, 110, 42], speed: [250, 1150, 82, 42],
@@ -707,11 +723,27 @@ function drawBoostButton() {
   ctx.fillStyle = ready || active ? pal.accent : "rgba(255,255,255,0.55)"; ctx.fill();
 }
 
+let bgCache = null, bgCacheKey = "";
 function drawBG() {
-  const g = ctx.createRadialGradient(CX, CY, 50, CX, CY, 900);
-  g.addColorStop(0, pal.bg[1]); g.addColorStop(1, pal.bg[0]);
-  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-  for (const s of stars) { ctx.globalAlpha = 0.55 + 0.45 * Math.sin(T * 2 + s.p); ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(s.x, s.y, s.r + 0.5, 0, 6.29); ctx.fill(); }
+  const key = pal.name + pal.bg[0] + pal.bg[1];
+  if (!bgCache || bgCacheKey !== key) {
+    if (!bgCache) { bgCache = document.createElement("canvas"); bgCache.width = W; bgCache.height = H; }
+    const c = bgCache.getContext("2d");
+    const g = c.createRadialGradient(CX, CY, 50, CX, CY, 900);
+    g.addColorStop(0, pal.bg[1]); g.addColorStop(1, pal.bg[0]);
+    c.fillStyle = g; c.fillRect(0, 0, W, H);
+    c.fillStyle = "#fff";
+    for (const s of stars) { c.globalAlpha = 0.55 + 0.45 * Math.sin(s.p); c.beginPath(); c.arc(s.x, s.y, s.r + 0.5, 0, 6.29); c.fill(); }
+    bgCacheKey = key;
+  }
+  ctx.drawImage(bgCache, 0, 0);
+  // Twinkle a quarter of the field instead of redrawing all 140 stars every frame.
+  ctx.fillStyle = "#fff";
+  for (let i = 0; i < stars.length; i += 4) {
+    const s = stars[i];
+    ctx.globalAlpha = 0.3 + 0.35 * Math.sin(T * 2 + s.p);
+    ctx.beginPath(); ctx.arc(s.x, s.y, s.r + 0.5, 0, 6.29); ctx.fill();
+  }
   ctx.globalAlpha = 1;
 }
 function drawTop() {
@@ -752,23 +784,40 @@ function drawTop() {
   button(BTN.difficulty, difficulty.toUpperCase());
   button(BTN.infinite, infiniteMode ? "∞ ON" : "∞ OFF");
 }
+// The blurred glow is the most expensive thing on screen, so bake it (with the arena floor)
+// into one plate and rotate that, instead of stroking two shadowBlur passes 60 times a second.
+const RP_PAD = 74, RP_SIZE = (RR + RP_PAD) * 2;
+let ringPlate = null, ringPlateKey = "";
+function buildRingPlate(halfAngle) {
+  if (!ringPlate) { ringPlate = document.createElement("canvas"); ringPlate.width = ringPlate.height = RP_SIZE; }
+  const c = ringPlate.getContext("2d"), m = RP_SIZE / 2;
+  c.setTransform(1, 0, 0, 1, 0, 0); c.clearRect(0, 0, RP_SIZE, RP_SIZE);
+  const g = c.createRadialGradient(m, m, 40, m, m, RR);
+  g.addColorStop(0, "rgba(255,255,255,0.12)"); g.addColorStop(1, "rgba(0,0,0,0.35)");
+  c.fillStyle = g; c.beginPath(); c.arc(m, m, RR, 0, 6.29); c.fill();
+  const arc = () => { c.beginPath(); c.arc(m, m, RR, -Math.PI / 2 + halfAngle, -Math.PI / 2 - halfAngle + Math.PI * 2); c.stroke(); };
+  c.lineCap = "round"; c.shadowColor = pal.glow;
+  c.shadowBlur = 40; c.strokeStyle = pal.glow; c.globalAlpha = 0.75; c.lineWidth = TH + 14; arc();
+  c.globalAlpha = 1; c.shadowBlur = 18; c.lineWidth = TH + 4; c.strokeStyle = pal.border; arc();
+  c.shadowBlur = 0;
+}
+
 function drawArena() {
   // Inner arena and the single moving exit.
-  const g = ctx.createRadialGradient(CX, CY, 40, CX, CY, RR);
-  g.addColorStop(0, "rgba(255,255,255,0.12)"); g.addColorStop(1, "rgba(0,0,0,0.35)");
-  ctx.fillStyle = g; ctx.beginPath(); ctx.arc(CX, CY, RR, 0, 6.29); ctx.fill();
+  const bucket = Math.round(GAP_HALF * 180 / Math.PI / 2) * 2;      // 2 degrees is invisible, but cuts rebuilds to ~1/s
+  const key = pal.name + pal.glow + pal.border + bucket;
+  if (key !== ringPlateKey) { buildRingPlate(bucket * Math.PI / 180); ringPlateKey = key; }
+  ctx.save();
+  ctx.translate(CX, CY); ctx.rotate(gapA + Math.PI / 2);
+  ctx.drawImage(ringPlate, -RP_SIZE / 2, -RP_SIZE / 2);
+  ctx.restore();
   ctx.save(); ctx.lineCap = "round";
   const drawRing = () => {
     ctx.beginPath();
     ctx.arc(CX, CY, RR, gapA + GAP_HALF, gapA - GAP_HALF + Math.PI * 2);
     ctx.stroke();
   };
-  ctx.shadowColor = pal.glow; ctx.shadowBlur = 40;
-  ctx.strokeStyle = pal.glow; ctx.globalAlpha = 0.75; ctx.lineWidth = TH + 14;
-  drawRing();
-  ctx.globalAlpha = 1; ctx.shadowBlur = 18; ctx.lineWidth = TH + 4; ctx.strokeStyle = pal.border;
-  drawRing();
-  ctx.shadowBlur = 0; ctx.lineWidth = TH + 2; ctx.strokeStyle = "#000";
+  ctx.lineWidth = TH + 2; ctx.strokeStyle = "#000";
   drawRing();
   ctx.lineWidth = TH - 2; ctx.strokeStyle = "#ffffff";
   drawRing();
@@ -933,7 +982,7 @@ function tick(dt) {
     boostCooldown = Math.max(0, boostCooldown - dt);
   }
   if (phase === "play") {
-    const n = Math.ceil(4 * speed), sdt = sim / n;
+    const n = Math.ceil(2 * speed), sdt = sim / n;
     for (let i = 0; i < n; i++) step(sdt);
     if (alive.length === 1) declareWinner();
   }
