@@ -1,39 +1,1637 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>https://victorezhil310.github.io/COUNTRY-FLAG-BATTLES/</loc>
+    <loc>https://countryflagbattles.vercel.app/</loc>
     <lastmod>2026-11-06</lastmod>
-    <changefreq>weekly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/af.png</image:loc>
+      <image:title>Flag of AF</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/al.png</image:loc>
+      <image:title>Flag of AL</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/dz.png</image:loc>
+      <image:title>Flag of DZ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ad.png</image:loc>
+      <image:title>Flag of AD</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ao.png</image:loc>
+      <image:title>Flag of AO</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ag.png</image:loc>
+      <image:title>Flag of AG</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ar.png</image:loc>
+      <image:title>Flag of AR</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/am.png</image:loc>
+      <image:title>Flag of AM</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/au.png</image:loc>
+      <image:title>Flag of AU</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/at.png</image:loc>
+      <image:title>Flag of AT</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/az.png</image:loc>
+      <image:title>Flag of AZ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/bs.png</image:loc>
+      <image:title>Flag of BS</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/bh.png</image:loc>
+      <image:title>Flag of BH</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/bd.png</image:loc>
+      <image:title>Flag of BD</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/bb.png</image:loc>
+      <image:title>Flag of BB</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/by.png</image:loc>
+      <image:title>Flag of BY</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/be.png</image:loc>
+      <image:title>Flag of BE</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/bz.png</image:loc>
+      <image:title>Flag of BZ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/bj.png</image:loc>
+      <image:title>Flag of BJ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/bt.png</image:loc>
+      <image:title>Flag of BT</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/bo.png</image:loc>
+      <image:title>Flag of BO</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ba.png</image:loc>
+      <image:title>Flag of BA</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/bw.png</image:loc>
+      <image:title>Flag of BW</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/br.png</image:loc>
+      <image:title>Flag of BR</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/bn.png</image:loc>
+      <image:title>Flag of BN</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/bg.png</image:loc>
+      <image:title>Flag of BG</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/bf.png</image:loc>
+      <image:title>Flag of BF</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/bi.png</image:loc>
+      <image:title>Flag of BI</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/cv.png</image:loc>
+      <image:title>Flag of CV</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/kh.png</image:loc>
+      <image:title>Flag of KH</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/cm.png</image:loc>
+      <image:title>Flag of CM</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ca.png</image:loc>
+      <image:title>Flag of CA</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/cf.png</image:loc>
+      <image:title>Flag of CF</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/td.png</image:loc>
+      <image:title>Flag of TD</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/cl.png</image:loc>
+      <image:title>Flag of CL</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/cn.png</image:loc>
+      <image:title>Flag of CN</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/co.png</image:loc>
+      <image:title>Flag of CO</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/km.png</image:loc>
+      <image:title>Flag of KM</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/cg.png</image:loc>
+      <image:title>Flag of CG</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/cd.png</image:loc>
+      <image:title>Flag of CD</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/cr.png</image:loc>
+      <image:title>Flag of CR</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ci.png</image:loc>
+      <image:title>Flag of CI</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/hr.png</image:loc>
+      <image:title>Flag of HR</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/cu.png</image:loc>
+      <image:title>Flag of CU</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/cy.png</image:loc>
+      <image:title>Flag of CY</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/cz.png</image:loc>
+      <image:title>Flag of CZ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/dk.png</image:loc>
+      <image:title>Flag of DK</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/dj.png</image:loc>
+      <image:title>Flag of DJ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/dm.png</image:loc>
+      <image:title>Flag of DM</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/do.png</image:loc>
+      <image:title>Flag of DO</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ec.png</image:loc>
+      <image:title>Flag of EC</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/eg.png</image:loc>
+      <image:title>Flag of EG</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/sv.png</image:loc>
+      <image:title>Flag of SV</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/gq.png</image:loc>
+      <image:title>Flag of GQ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/er.png</image:loc>
+      <image:title>Flag of ER</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ee.png</image:loc>
+      <image:title>Flag of EE</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/sz.png</image:loc>
+      <image:title>Flag of SZ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/et.png</image:loc>
+      <image:title>Flag of ET</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/fj.png</image:loc>
+      <image:title>Flag of FJ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/fi.png</image:loc>
+      <image:title>Flag of FI</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/fr.png</image:loc>
+      <image:title>Flag of FR</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ga.png</image:loc>
+      <image:title>Flag of GA</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/gm.png</image:loc>
+      <image:title>Flag of GM</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ge.png</image:loc>
+      <image:title>Flag of GE</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/de.png</image:loc>
+      <image:title>Flag of DE</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/gh.png</image:loc>
+      <image:title>Flag of GH</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/gr.png</image:loc>
+      <image:title>Flag of GR</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/gd.png</image:loc>
+      <image:title>Flag of GD</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/gt.png</image:loc>
+      <image:title>Flag of GT</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/gn.png</image:loc>
+      <image:title>Flag of GN</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/gw.png</image:loc>
+      <image:title>Flag of GW</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/gy.png</image:loc>
+      <image:title>Flag of GY</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ht.png</image:loc>
+      <image:title>Flag of HT</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/hn.png</image:loc>
+      <image:title>Flag of HN</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/hu.png</image:loc>
+      <image:title>Flag of HU</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/is.png</image:loc>
+      <image:title>Flag of IS</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/in.png</image:loc>
+      <image:title>Flag of IN</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/id.png</image:loc>
+      <image:title>Flag of ID</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ir.png</image:loc>
+      <image:title>Flag of IR</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/iq.png</image:loc>
+      <image:title>Flag of IQ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ie.png</image:loc>
+      <image:title>Flag of IE</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/il.png</image:loc>
+      <image:title>Flag of IL</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/it.png</image:loc>
+      <image:title>Flag of IT</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/jm.png</image:loc>
+      <image:title>Flag of JM</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/jp.png</image:loc>
+      <image:title>Flag of JP</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/jo.png</image:loc>
+      <image:title>Flag of JO</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/kz.png</image:loc>
+      <image:title>Flag of KZ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ke.png</image:loc>
+      <image:title>Flag of KE</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ki.png</image:loc>
+      <image:title>Flag of KI</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/kw.png</image:loc>
+      <image:title>Flag of KW</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/kg.png</image:loc>
+      <image:title>Flag of KG</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/la.png</image:loc>
+      <image:title>Flag of LA</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/lv.png</image:loc>
+      <image:title>Flag of LV</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/lb.png</image:loc>
+      <image:title>Flag of LB</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ls.png</image:loc>
+      <image:title>Flag of LS</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/lr.png</image:loc>
+      <image:title>Flag of LR</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ly.png</image:loc>
+      <image:title>Flag of LY</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/li.png</image:loc>
+      <image:title>Flag of LI</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/lt.png</image:loc>
+      <image:title>Flag of LT</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/lu.png</image:loc>
+      <image:title>Flag of LU</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/mg.png</image:loc>
+      <image:title>Flag of MG</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/mw.png</image:loc>
+      <image:title>Flag of MW</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/my.png</image:loc>
+      <image:title>Flag of MY</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/mv.png</image:loc>
+      <image:title>Flag of MV</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ml.png</image:loc>
+      <image:title>Flag of ML</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/mt.png</image:loc>
+      <image:title>Flag of MT</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/mh.png</image:loc>
+      <image:title>Flag of MH</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/mr.png</image:loc>
+      <image:title>Flag of MR</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/mu.png</image:loc>
+      <image:title>Flag of MU</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/mx.png</image:loc>
+      <image:title>Flag of MX</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/fm.png</image:loc>
+      <image:title>Flag of FM</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/md.png</image:loc>
+      <image:title>Flag of MD</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/mc.png</image:loc>
+      <image:title>Flag of MC</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/mn.png</image:loc>
+      <image:title>Flag of MN</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/me.png</image:loc>
+      <image:title>Flag of ME</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ma.png</image:loc>
+      <image:title>Flag of MA</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/mz.png</image:loc>
+      <image:title>Flag of MZ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/mm.png</image:loc>
+      <image:title>Flag of MM</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/na.png</image:loc>
+      <image:title>Flag of NA</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/nr.png</image:loc>
+      <image:title>Flag of NR</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/np.png</image:loc>
+      <image:title>Flag of NP</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/nl.png</image:loc>
+      <image:title>Flag of NL</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/nz.png</image:loc>
+      <image:title>Flag of NZ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ni.png</image:loc>
+      <image:title>Flag of NI</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ne.png</image:loc>
+      <image:title>Flag of NE</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ng.png</image:loc>
+      <image:title>Flag of NG</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/kp.png</image:loc>
+      <image:title>Flag of KP</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/mk.png</image:loc>
+      <image:title>Flag of MK</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/no.png</image:loc>
+      <image:title>Flag of NO</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/om.png</image:loc>
+      <image:title>Flag of OM</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/pk.png</image:loc>
+      <image:title>Flag of PK</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/pw.png</image:loc>
+      <image:title>Flag of PW</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/pa.png</image:loc>
+      <image:title>Flag of PA</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/pg.png</image:loc>
+      <image:title>Flag of PG</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/py.png</image:loc>
+      <image:title>Flag of PY</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/pe.png</image:loc>
+      <image:title>Flag of PE</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ph.png</image:loc>
+      <image:title>Flag of PH</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/pl.png</image:loc>
+      <image:title>Flag of PL</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/pt.png</image:loc>
+      <image:title>Flag of PT</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/qa.png</image:loc>
+      <image:title>Flag of QA</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/kr.png</image:loc>
+      <image:title>Flag of KR</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ro.png</image:loc>
+      <image:title>Flag of RO</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ru.png</image:loc>
+      <image:title>Flag of RU</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/rw.png</image:loc>
+      <image:title>Flag of RW</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/kn.png</image:loc>
+      <image:title>Flag of KN</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/lc.png</image:loc>
+      <image:title>Flag of LC</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/vc.png</image:loc>
+      <image:title>Flag of VC</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ws.png</image:loc>
+      <image:title>Flag of WS</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/sm.png</image:loc>
+      <image:title>Flag of SM</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/st.png</image:loc>
+      <image:title>Flag of ST</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/sa.png</image:loc>
+      <image:title>Flag of SA</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/sn.png</image:loc>
+      <image:title>Flag of SN</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/rs.png</image:loc>
+      <image:title>Flag of RS</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/sc.png</image:loc>
+      <image:title>Flag of SC</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/sl.png</image:loc>
+      <image:title>Flag of SL</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/sg.png</image:loc>
+      <image:title>Flag of SG</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/sk.png</image:loc>
+      <image:title>Flag of SK</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/si.png</image:loc>
+      <image:title>Flag of SI</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/sb.png</image:loc>
+      <image:title>Flag of SB</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/so.png</image:loc>
+      <image:title>Flag of SO</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/za.png</image:loc>
+      <image:title>Flag of ZA</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ss.png</image:loc>
+      <image:title>Flag of SS</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/es.png</image:loc>
+      <image:title>Flag of ES</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/lk.png</image:loc>
+      <image:title>Flag of LK</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/sd.png</image:loc>
+      <image:title>Flag of SD</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/sr.png</image:loc>
+      <image:title>Flag of SR</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/se.png</image:loc>
+      <image:title>Flag of SE</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ch.png</image:loc>
+      <image:title>Flag of CH</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/sy.png</image:loc>
+      <image:title>Flag of SY</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/tj.png</image:loc>
+      <image:title>Flag of TJ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/tz.png</image:loc>
+      <image:title>Flag of TZ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/th.png</image:loc>
+      <image:title>Flag of TH</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/tl.png</image:loc>
+      <image:title>Flag of TL</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/tg.png</image:loc>
+      <image:title>Flag of TG</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/to.png</image:loc>
+      <image:title>Flag of TO</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/tt.png</image:loc>
+      <image:title>Flag of TT</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/tn.png</image:loc>
+      <image:title>Flag of TN</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/tr.png</image:loc>
+      <image:title>Flag of TR</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/tm.png</image:loc>
+      <image:title>Flag of TM</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/tv.png</image:loc>
+      <image:title>Flag of TV</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ug.png</image:loc>
+      <image:title>Flag of UG</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ua.png</image:loc>
+      <image:title>Flag of UA</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ae.png</image:loc>
+      <image:title>Flag of AE</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/gb.png</image:loc>
+      <image:title>Flag of GB</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/us.png</image:loc>
+      <image:title>Flag of US</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/uy.png</image:loc>
+      <image:title>Flag of UY</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/uz.png</image:loc>
+      <image:title>Flag of UZ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/vu.png</image:loc>
+      <image:title>Flag of VU</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ve.png</image:loc>
+      <image:title>Flag of VE</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/vn.png</image:loc>
+      <image:title>Flag of VN</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ye.png</image:loc>
+      <image:title>Flag of YE</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/zm.png</image:loc>
+      <image:title>Flag of ZM</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/zw.png</image:loc>
+      <image:title>Flag of ZW</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ps.png</image:loc>
+      <image:title>Flag of PS</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/va.png</image:loc>
+      <image:title>Flag of VA</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/tw.png</image:loc>
+      <image:title>Flag of TW</image:title>
+    </image:image>
   </url>
   <url>
-    <loc>https://victorezhil310.github.io/COUNTRY-FLAG-BATTLES/index.html</loc>
+    <loc>https://countryflagbattles.vercel.app/index.html</loc>
     <lastmod>2026-11-06</lastmod>
-    <changefreq>weekly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/af.png</image:loc>
+      <image:title>Flag of AF</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/al.png</image:loc>
+      <image:title>Flag of AL</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/dz.png</image:loc>
+      <image:title>Flag of DZ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ad.png</image:loc>
+      <image:title>Flag of AD</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ao.png</image:loc>
+      <image:title>Flag of AO</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ag.png</image:loc>
+      <image:title>Flag of AG</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ar.png</image:loc>
+      <image:title>Flag of AR</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/am.png</image:loc>
+      <image:title>Flag of AM</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/au.png</image:loc>
+      <image:title>Flag of AU</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/at.png</image:loc>
+      <image:title>Flag of AT</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/az.png</image:loc>
+      <image:title>Flag of AZ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/bs.png</image:loc>
+      <image:title>Flag of BS</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/bh.png</image:loc>
+      <image:title>Flag of BH</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/bd.png</image:loc>
+      <image:title>Flag of BD</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/bb.png</image:loc>
+      <image:title>Flag of BB</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/by.png</image:loc>
+      <image:title>Flag of BY</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/be.png</image:loc>
+      <image:title>Flag of BE</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/bz.png</image:loc>
+      <image:title>Flag of BZ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/bj.png</image:loc>
+      <image:title>Flag of BJ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/bt.png</image:loc>
+      <image:title>Flag of BT</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/bo.png</image:loc>
+      <image:title>Flag of BO</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ba.png</image:loc>
+      <image:title>Flag of BA</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/bw.png</image:loc>
+      <image:title>Flag of BW</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/br.png</image:loc>
+      <image:title>Flag of BR</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/bn.png</image:loc>
+      <image:title>Flag of BN</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/bg.png</image:loc>
+      <image:title>Flag of BG</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/bf.png</image:loc>
+      <image:title>Flag of BF</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/bi.png</image:loc>
+      <image:title>Flag of BI</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/cv.png</image:loc>
+      <image:title>Flag of CV</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/kh.png</image:loc>
+      <image:title>Flag of KH</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/cm.png</image:loc>
+      <image:title>Flag of CM</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ca.png</image:loc>
+      <image:title>Flag of CA</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/cf.png</image:loc>
+      <image:title>Flag of CF</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/td.png</image:loc>
+      <image:title>Flag of TD</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/cl.png</image:loc>
+      <image:title>Flag of CL</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/cn.png</image:loc>
+      <image:title>Flag of CN</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/co.png</image:loc>
+      <image:title>Flag of CO</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/km.png</image:loc>
+      <image:title>Flag of KM</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/cg.png</image:loc>
+      <image:title>Flag of CG</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/cd.png</image:loc>
+      <image:title>Flag of CD</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/cr.png</image:loc>
+      <image:title>Flag of CR</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ci.png</image:loc>
+      <image:title>Flag of CI</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/hr.png</image:loc>
+      <image:title>Flag of HR</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/cu.png</image:loc>
+      <image:title>Flag of CU</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/cy.png</image:loc>
+      <image:title>Flag of CY</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/cz.png</image:loc>
+      <image:title>Flag of CZ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/dk.png</image:loc>
+      <image:title>Flag of DK</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/dj.png</image:loc>
+      <image:title>Flag of DJ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/dm.png</image:loc>
+      <image:title>Flag of DM</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/do.png</image:loc>
+      <image:title>Flag of DO</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ec.png</image:loc>
+      <image:title>Flag of EC</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/eg.png</image:loc>
+      <image:title>Flag of EG</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/sv.png</image:loc>
+      <image:title>Flag of SV</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/gq.png</image:loc>
+      <image:title>Flag of GQ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/er.png</image:loc>
+      <image:title>Flag of ER</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ee.png</image:loc>
+      <image:title>Flag of EE</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/sz.png</image:loc>
+      <image:title>Flag of SZ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/et.png</image:loc>
+      <image:title>Flag of ET</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/fj.png</image:loc>
+      <image:title>Flag of FJ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/fi.png</image:loc>
+      <image:title>Flag of FI</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/fr.png</image:loc>
+      <image:title>Flag of FR</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ga.png</image:loc>
+      <image:title>Flag of GA</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/gm.png</image:loc>
+      <image:title>Flag of GM</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ge.png</image:loc>
+      <image:title>Flag of GE</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/de.png</image:loc>
+      <image:title>Flag of DE</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/gh.png</image:loc>
+      <image:title>Flag of GH</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/gr.png</image:loc>
+      <image:title>Flag of GR</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/gd.png</image:loc>
+      <image:title>Flag of GD</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/gt.png</image:loc>
+      <image:title>Flag of GT</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/gn.png</image:loc>
+      <image:title>Flag of GN</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/gw.png</image:loc>
+      <image:title>Flag of GW</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/gy.png</image:loc>
+      <image:title>Flag of GY</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ht.png</image:loc>
+      <image:title>Flag of HT</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/hn.png</image:loc>
+      <image:title>Flag of HN</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/hu.png</image:loc>
+      <image:title>Flag of HU</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/is.png</image:loc>
+      <image:title>Flag of IS</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/in.png</image:loc>
+      <image:title>Flag of IN</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/id.png</image:loc>
+      <image:title>Flag of ID</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ir.png</image:loc>
+      <image:title>Flag of IR</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/iq.png</image:loc>
+      <image:title>Flag of IQ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ie.png</image:loc>
+      <image:title>Flag of IE</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/il.png</image:loc>
+      <image:title>Flag of IL</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/it.png</image:loc>
+      <image:title>Flag of IT</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/jm.png</image:loc>
+      <image:title>Flag of JM</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/jp.png</image:loc>
+      <image:title>Flag of JP</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/jo.png</image:loc>
+      <image:title>Flag of JO</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/kz.png</image:loc>
+      <image:title>Flag of KZ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ke.png</image:loc>
+      <image:title>Flag of KE</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ki.png</image:loc>
+      <image:title>Flag of KI</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/kw.png</image:loc>
+      <image:title>Flag of KW</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/kg.png</image:loc>
+      <image:title>Flag of KG</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/la.png</image:loc>
+      <image:title>Flag of LA</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/lv.png</image:loc>
+      <image:title>Flag of LV</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/lb.png</image:loc>
+      <image:title>Flag of LB</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ls.png</image:loc>
+      <image:title>Flag of LS</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/lr.png</image:loc>
+      <image:title>Flag of LR</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ly.png</image:loc>
+      <image:title>Flag of LY</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/li.png</image:loc>
+      <image:title>Flag of LI</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/lt.png</image:loc>
+      <image:title>Flag of LT</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/lu.png</image:loc>
+      <image:title>Flag of LU</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/mg.png</image:loc>
+      <image:title>Flag of MG</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/mw.png</image:loc>
+      <image:title>Flag of MW</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/my.png</image:loc>
+      <image:title>Flag of MY</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/mv.png</image:loc>
+      <image:title>Flag of MV</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ml.png</image:loc>
+      <image:title>Flag of ML</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/mt.png</image:loc>
+      <image:title>Flag of MT</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/mh.png</image:loc>
+      <image:title>Flag of MH</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/mr.png</image:loc>
+      <image:title>Flag of MR</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/mu.png</image:loc>
+      <image:title>Flag of MU</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/mx.png</image:loc>
+      <image:title>Flag of MX</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/fm.png</image:loc>
+      <image:title>Flag of FM</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/md.png</image:loc>
+      <image:title>Flag of MD</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/mc.png</image:loc>
+      <image:title>Flag of MC</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/mn.png</image:loc>
+      <image:title>Flag of MN</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/me.png</image:loc>
+      <image:title>Flag of ME</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ma.png</image:loc>
+      <image:title>Flag of MA</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/mz.png</image:loc>
+      <image:title>Flag of MZ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/mm.png</image:loc>
+      <image:title>Flag of MM</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/na.png</image:loc>
+      <image:title>Flag of NA</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/nr.png</image:loc>
+      <image:title>Flag of NR</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/np.png</image:loc>
+      <image:title>Flag of NP</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/nl.png</image:loc>
+      <image:title>Flag of NL</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/nz.png</image:loc>
+      <image:title>Flag of NZ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ni.png</image:loc>
+      <image:title>Flag of NI</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ne.png</image:loc>
+      <image:title>Flag of NE</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ng.png</image:loc>
+      <image:title>Flag of NG</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/kp.png</image:loc>
+      <image:title>Flag of KP</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/mk.png</image:loc>
+      <image:title>Flag of MK</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/no.png</image:loc>
+      <image:title>Flag of NO</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/om.png</image:loc>
+      <image:title>Flag of OM</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/pk.png</image:loc>
+      <image:title>Flag of PK</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/pw.png</image:loc>
+      <image:title>Flag of PW</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/pa.png</image:loc>
+      <image:title>Flag of PA</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/pg.png</image:loc>
+      <image:title>Flag of PG</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/py.png</image:loc>
+      <image:title>Flag of PY</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/pe.png</image:loc>
+      <image:title>Flag of PE</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ph.png</image:loc>
+      <image:title>Flag of PH</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/pl.png</image:loc>
+      <image:title>Flag of PL</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/pt.png</image:loc>
+      <image:title>Flag of PT</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/qa.png</image:loc>
+      <image:title>Flag of QA</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/kr.png</image:loc>
+      <image:title>Flag of KR</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ro.png</image:loc>
+      <image:title>Flag of RO</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ru.png</image:loc>
+      <image:title>Flag of RU</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/rw.png</image:loc>
+      <image:title>Flag of RW</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/kn.png</image:loc>
+      <image:title>Flag of KN</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/lc.png</image:loc>
+      <image:title>Flag of LC</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/vc.png</image:loc>
+      <image:title>Flag of VC</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ws.png</image:loc>
+      <image:title>Flag of WS</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/sm.png</image:loc>
+      <image:title>Flag of SM</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/st.png</image:loc>
+      <image:title>Flag of ST</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/sa.png</image:loc>
+      <image:title>Flag of SA</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/sn.png</image:loc>
+      <image:title>Flag of SN</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/rs.png</image:loc>
+      <image:title>Flag of RS</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/sc.png</image:loc>
+      <image:title>Flag of SC</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/sl.png</image:loc>
+      <image:title>Flag of SL</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/sg.png</image:loc>
+      <image:title>Flag of SG</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/sk.png</image:loc>
+      <image:title>Flag of SK</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/si.png</image:loc>
+      <image:title>Flag of SI</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/sb.png</image:loc>
+      <image:title>Flag of SB</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/so.png</image:loc>
+      <image:title>Flag of SO</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/za.png</image:loc>
+      <image:title>Flag of ZA</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ss.png</image:loc>
+      <image:title>Flag of SS</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/es.png</image:loc>
+      <image:title>Flag of ES</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/lk.png</image:loc>
+      <image:title>Flag of LK</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/sd.png</image:loc>
+      <image:title>Flag of SD</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/sr.png</image:loc>
+      <image:title>Flag of SR</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/se.png</image:loc>
+      <image:title>Flag of SE</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ch.png</image:loc>
+      <image:title>Flag of CH</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/sy.png</image:loc>
+      <image:title>Flag of SY</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/tj.png</image:loc>
+      <image:title>Flag of TJ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/tz.png</image:loc>
+      <image:title>Flag of TZ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/th.png</image:loc>
+      <image:title>Flag of TH</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/tl.png</image:loc>
+      <image:title>Flag of TL</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/tg.png</image:loc>
+      <image:title>Flag of TG</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/to.png</image:loc>
+      <image:title>Flag of TO</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/tt.png</image:loc>
+      <image:title>Flag of TT</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/tn.png</image:loc>
+      <image:title>Flag of TN</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/tr.png</image:loc>
+      <image:title>Flag of TR</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/tm.png</image:loc>
+      <image:title>Flag of TM</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/tv.png</image:loc>
+      <image:title>Flag of TV</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ug.png</image:loc>
+      <image:title>Flag of UG</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ua.png</image:loc>
+      <image:title>Flag of UA</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ae.png</image:loc>
+      <image:title>Flag of AE</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/gb.png</image:loc>
+      <image:title>Flag of GB</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/us.png</image:loc>
+      <image:title>Flag of US</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/uy.png</image:loc>
+      <image:title>Flag of UY</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/uz.png</image:loc>
+      <image:title>Flag of UZ</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/vu.png</image:loc>
+      <image:title>Flag of VU</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ve.png</image:loc>
+      <image:title>Flag of VE</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/vn.png</image:loc>
+      <image:title>Flag of VN</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ye.png</image:loc>
+      <image:title>Flag of YE</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/zm.png</image:loc>
+      <image:title>Flag of ZM</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/zw.png</image:loc>
+      <image:title>Flag of ZW</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/ps.png</image:loc>
+      <image:title>Flag of PS</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/va.png</image:loc>
+      <image:title>Flag of VA</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://countryflagbattles.vercel.app/flags/tw.png</image:loc>
+      <image:title>Flag of TW</image:title>
+    </image:image>
   </url>
   <url>
-    <loc>https://victorezhil310.github.io/COUNTRY-FLAG-BATTLES/about.html</loc>
+    <loc>https://countryflagbattles.vercel.app/about</loc>
+    <lastmod>2026-11-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://countryflagbattles.vercel.app/about.html</loc>
     <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://victorezhil310.github.io/COUNTRY-FLAG-BATTLES/privacy-policy.html</loc>
+    <loc>https://countryflagbattles.vercel.app/privacy</loc>
     <lastmod>2026-11-06</lastmod>
-    <changefreq>yearly</changefreq>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://countryflagbattles.vercel.app/privacy.html</loc>
+    <lastmod>2026-11-06</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://victorezhil310.github.io/COUNTRY-FLAG-BATTLES/terms.html</loc>
+    <loc>https://countryflagbattles.vercel.app/privacy-policy.html</loc>
     <lastmod>2026-11-06</lastmod>
-    <changefreq>yearly</changefreq>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://countryflagbattles.vercel.app/terms</loc>
+    <lastmod>2026-11-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://countryflagbattles.vercel.app/terms.html</loc>
+    <lastmod>2026-11-06</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://victorezhil310.github.io/COUNTRY-FLAG-BATTLES/contact.html</loc>
+    <loc>https://countryflagbattles.vercel.app/contact</loc>
     <lastmod>2026-11-06</lastmod>
-    <changefreq>yearly</changefreq>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://countryflagbattles.vercel.app/contact.html</loc>
+    <lastmod>2026-11-06</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 </urlset>
