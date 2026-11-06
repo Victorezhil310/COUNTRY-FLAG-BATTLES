@@ -79,11 +79,13 @@ copy by `tools/port_to_android.js` — Google crawls the site, not the app binar
 
 ## Google Play checklist
 
-1. Upload `app-release.aab` to a new release in Play Console (Android 16 / API 36 is the current
-   minimum target for new apps).
-2. Data safety: declare **no data collected** — the app has no network permission and no analytics.
-3. Store listing: use `play/play_store_icon_512.png` as the app icon plus 2+ screenshots.
-4. Content rating questionnaire, then a testing track before production.
+1. `targetSdk` is already 36 (Android 16), above the Android 13 requirement. Upload `app-release.aab`
+   to a new release in Play Console.
+2. In **App content → Advertising ID**, declare that the app **does not use** the advertising ID.
+   The app has no ads, advertising-ID permission, or advertising SDK; do not add `AD_ID` permission.
+3. Data safety: declare **no data collected** — the app has no network permission and no analytics.
+4. Store listing: use `play/play_store_icon_512.png` as the app icon plus 2+ screenshots.
+5. Content rating questionnaire, then a testing track before production.
 
 ## Web deploy
 
