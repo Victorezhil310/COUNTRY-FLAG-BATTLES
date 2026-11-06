@@ -33,3 +33,6 @@ tools/*.xml
 /tools/*.html
 /tools/rlog/
 /tools/apk*/
+
+# old iframe wrapper; docs/index.html is standalone
+/boosthtml.html
