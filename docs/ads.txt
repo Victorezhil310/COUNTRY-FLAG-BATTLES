@@ -1,0 +1,17 @@
+# ads.txt — Authorized Digital Sellers
+#
+# DO NOT UPLOAD THIS FILE AS-IS. An ads.txt line asserts that a named seller is authorised to
+# sell ad space on THIS domain. Publishing a fabricated or copied publisher ID is a policy
+# violation with AdSense and can get the site suspended.
+#
+# If you are not serving ads, delete ads.txt entirely — an empty or fake one is worse than none.
+#
+# If you ARE serving ads from Google AdSense on this website:
+#   1. Sign in to AdSense → Settings → AdSense account information → copy your Publisher ID (pub-…)
+#   2. Replace the line below, and remove these # comment lines
+#   3. Re-deploy, then check https://countryflagbattles.vercel.app/ads.txt returns it
+#
+google.com, pub-REPLACE_WITH_YOUR_ADSENSE_PUBLISHER_ID, DIRECT, f08c47fec0942fa0
+#
+# For Google AdMob (the Android app) there is no ads.txt — AdMob revenue is tied to the
+# AdMob app ID inside the app, not to a website file. The app currently contains no ad SDK.
