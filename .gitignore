@@ -30,3 +30,4 @@ tools/*.xml
 # extracted bundletool scratch output
 /tools/apk*/
 /tools/*.apks
+/tools/*.html
