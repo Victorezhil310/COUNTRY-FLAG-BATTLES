@@ -6,8 +6,9 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/privacy", "destination": "/privacy-policy.html" },
-    { "source": "/policy", "destination": "/privacy-policy.html" },
+    { "source": "/privacy", "destination": "/privacy.html" },
+    { "source": "/privacy-policy", "destination": "/privacy-policy.html" },
+    { "source": "/policy", "destination": "/privacy.html" },
     { "source": "/terms", "destination": "/terms.html" },
     { "source": "/about", "destination": "/about.html" },
     { "source": "/contact", "destination": "/contact.html" }
