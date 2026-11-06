@@ -28,6 +28,8 @@ const AUTO_GAP = true;                 // enable automatic open/close of the gap
 let GAP_MIN = 0.06;                    // smallest half-angle (rad)
 let GAP_MAX = 0.32;                    // largest half-angle (rad)
 const GAP_OPEN_SPEED = 1.2;            // speed of open/close (radians per second)
+const GAP_EVENT_PERIOD = 15;           // seconds between gap-centre events
+const GAP_EVENT_HOLD = 2.5;            // seconds the gap stays parked open at the top
 let OMEGA = 0.75;                     // moving gap speed (rad/s)
 const RF = 13;                           // flag collision radius
 const FW = 34, FH = 25;                  // flag max draw size in arena
@@ -486,13 +488,20 @@ function angDiff(a, b) { let d = a - b; while (d > Math.PI) d -= 2 * Math.PI; wh
 function step(dt) {
   const turbo = boostT > 0;
   const cfg = DIFFICULTY_CONFIG[difficulty];
-  gapA += dir * OMEGA * dt * (turbo ? cfg.boostMult : 1);
-  if (AUTO_GAP) {
-    // oscillate gap size between GAP_MIN and GAP_MAX using global time T
-    const amp = 0.5 + 0.5 * Math.sin(T * GAP_OPEN_SPEED);
-    GAP_HALF = Math.min(GAP_MAX, (GAP_MIN + (GAP_MAX - GAP_MIN) * amp) * (turbo ? 1.4 : 1));
-  }
   roundT += dt;
+  // Once every GAP_EVENT_PERIOD seconds the gap parks at the top, wide open, for a free escape window.
+  const hold = roundT % GAP_EVENT_PERIOD >= GAP_EVENT_PERIOD - GAP_EVENT_HOLD;
+  if (hold) {
+    gapA += angDiff(-Math.PI / 2, gapA) * Math.min(1, 7 * dt);
+    GAP_HALF = GAP_MAX;
+  } else {
+    gapA += dir * OMEGA * dt * (turbo ? cfg.boostMult : 1);
+    if (AUTO_GAP) {
+      // oscillate gap size between GAP_MIN and GAP_MAX using global time T
+      const amp = 0.5 + 0.5 * Math.sin(T * GAP_OPEN_SPEED);
+      GAP_HALF = Math.min(GAP_MAX, (GAP_MIN + (GAP_MAX - GAP_MIN) * amp) * (turbo ? 1.4 : 1));
+    }
+  }
   for (const f of alive) {
     f.vy += G * dt;
     const sp = Math.hypot(f.vx, f.vy); if (sp > MAXV) { f.vx *= MAXV / sp; f.vy *= MAXV / sp; }
@@ -892,6 +901,16 @@ function drawOverlay() {
   if (paused && phase !== "start") { ctx.fillStyle = "rgba(0,0,0,0.3)"; ctx.fillRect(0, 340, W, 620); outlined("PAUSED", CX, CY, 70, "#fff"); }
 }
 
+function drawWatermark() {
+  const label = "COUNTRY_FLAGS_07";
+  ctx.font = `800 15px ${FONT}`;
+  const w = Math.round(ctx.measureText(label).width) + 26, h = 28, x = W - 30 - w, y = 216;
+  ctx.save(); ctx.shadowColor = "rgba(0,0,0,0.45)"; ctx.shadowBlur = 10; ctx.shadowOffsetY = 3;
+  rr(ctx, x, y, w, h, 14); ctx.fillStyle = "#fff"; ctx.fill();
+  ctx.restore();
+  txt(label, x + w / 2, y + h / 2 + 1, 15, "#000", "center", 800, 1);
+}
+
 function draw() {
   ctx.setTransform(S * DPR, 0, 0, S * DPR, 0, 0);
   drawBG(); drawTop(); drawArena();
@@ -899,7 +918,7 @@ function draw() {
   drawGrid();
   for (const f of anims) if (f.state === "drop") { const [w, h] = dims(f.ct.tex, FW * flagScale, FH * flagScale); drawFlag(f.ct.tex, f.x, f.y, w * f.sc, h * f.sc, f.a, false, 0); }
   if (phase === "winner") { ctx.fillStyle = "rgba(0,0,0,0.35)"; ctx.beginPath(); ctx.arc(CX, CY, RR - 6, 0, 6.29); ctx.fill(); drawWinner(); }
-  drawFx(); drawOverlay();
+  drawFx(); drawOverlay(); drawWatermark();
   if (showSearch) drawSearch();
 }
 
