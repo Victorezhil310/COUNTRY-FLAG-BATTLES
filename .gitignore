@@ -31,3 +31,5 @@ tools/*.xml
 /tools/apk*/
 /tools/*.apks
 /tools/*.html
+/tools/rlog/
+/tools/apk*/
