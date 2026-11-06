@@ -26,3 +26,7 @@ tools/*.xml
 # --- old desktop prototype (has its own nested .git); root-anchored so it
 # --- cannot match the lowercase flags/ asset dirs on case-insensitive Windows
 /FLAGS/
+
+# extracted bundletool scratch output
+/tools/apk*/
+/tools/*.apks

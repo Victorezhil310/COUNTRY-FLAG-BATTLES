@@ -3,6 +3,7 @@ package com.victorflagsa.boostflagrush;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Insets;
+import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
@@ -53,26 +54,30 @@ public class MainActivity extends Activity {
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
         setContentView(root);
 
-        // Android 15+ is always edge-to-edge, so inset the WebView itself rather than padding it:
-        // a real size change fires the page's resize handler and the canvas re-fits inside the safe area.
-        root.setOnApplyWindowInsetsListener((v, insets) -> {
-            Insets bars = insets.getInsets(WindowInsets.Type.systemBars() | WindowInsets.Type.displayCutout());
-            FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) webView.getLayoutParams();
-            lp.setMargins(bars.left, bars.top, bars.right, bars.bottom);
-            webView.setLayoutParams(lp);
-            return insets;
-        });
-        root.requestApplyInsets();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            // Android 15+ is always edge-to-edge, so inset the WebView itself rather than padding it:
+            // a real size change fires the page's resize handler and the canvas re-fits inside the safe area.
+            root.setOnApplyWindowInsetsListener((v, insets) -> {
+                Insets bars = insets.getInsets(WindowInsets.Type.systemBars() | WindowInsets.Type.displayCutout());
+                FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) webView.getLayoutParams();
+                lp.setMargins(bars.left, bars.top, bars.right, bars.bottom);
+                webView.setLayoutParams(lp);
+                return insets;
+            });
+            root.requestApplyInsets();
 
-        WindowInsetsController controller = getWindow().getInsetsController();
-        if (controller != null) {
-            controller.setSystemBarsAppearance(0,
-                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
-                            | WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS);
-            // Immersive: bars hide for a full-bleed arena, and the inset listener above re-fits
-            // the canvas whenever a swipe brings them back transiently.
-            controller.setSystemBarsBehavior(WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
-            controller.hide(WindowInsets.Type.systemBars());
+            WindowInsetsController controller = getWindow().getInsetsController();
+            if (controller != null) {
+                controller.setSystemBarsAppearance(0,
+                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+                                | WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS);
+                controller.setSystemBarsBehavior(WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+                controller.hide(WindowInsets.Type.systemBars());
+            }
+        } else {
+            // Android 7-10: these inset and controller APIs do not exist, and the window is not
+            // edge-to-edge, so the plain immersive flags are enough.
+            applyLegacyImmersive(root);
         }
 
         tts = new TextToSpeech(this, status -> {
@@ -84,6 +89,28 @@ public class MainActivity extends Activity {
                 tts.setSpeechRate(1.0f);
             }
         });
+
+        // Without focus the +FLAG country search cannot raise the keyboard.
+        webView.requestFocus();
+        webView.loadUrl(ASSET_URL);
+    }
+
+    @SuppressWarnings("deprecation")
+    private void setLegacyImmersiveFlags(View root) {
+        root.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+    }
+
+    @SuppressWarnings("deprecation")
+    private void applyLegacyImmersive(View root) {
+        root.setOnSystemUiVisibilityChangeListener(flags -> {
+            if ((flags & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) setLegacyImmersiveFlags(root);
+        });
+        setLegacyImmersiveFlags(root);
     }
 
     @Override

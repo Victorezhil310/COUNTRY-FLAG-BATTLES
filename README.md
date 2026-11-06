@@ -20,7 +20,17 @@ and the game is fully playable offline.
 | applicationId | `com.victorflagsa.boostflagrush` |
 | minSdk / targetSdk / compileSdk | 24 / 36 / 36 |
 | Orientation | portrait, immersive fullscreen |
+| Screens | small → xlarge, `anyDensity`, resizable (split-screen and foldables) |
+| Input | touch, mouse and stylus (pointer events), plus the soft keyboard for flag search |
 | Speech | Android `TextToSpeech` through the `AndroidTts` JS bridge, with the Web Speech API as fallback |
+
+The canvas is a fixed 9:16 stage that scales to fit, so tall phones letterbox vertically instead of
+cropping. Android 11+ gets edge-to-edge insets handled by resizing the WebView; Android 7-10 uses the
+legacy immersive flags, because the API 30 inset classes do not exist there.
+
+Verified on an Android 16/17 x86_64 emulator: 196/196 flags loaded offline, round start, eliminations
+and scoring, emoji reactions, `TextToSpeech` speaking through the bridge, and the +FLAG search box
+raising the keyboard.
 
 ### Build the .aab
 
