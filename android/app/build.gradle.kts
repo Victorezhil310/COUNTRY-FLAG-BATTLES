@@ -55,4 +55,5 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.10.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.android.gms:play-services-games-v2:20.1.2")
+    implementation("com.google.android.gms:play-services-ads:23.6.0")
 }

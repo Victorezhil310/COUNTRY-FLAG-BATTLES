@@ -16,6 +16,11 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.appopen.AppOpenAd;
 import com.google.android.gms.games.AchievementsClient;
 import com.google.android.gms.games.GamesSignInClient;
 import com.google.android.gms.games.LeaderboardsClient;
@@ -32,12 +37,20 @@ public class MainActivity extends Activity {
     private TextToSpeech tts;
     private volatile boolean ttsReady;
 
+    private AdView adView;
+    private AppOpenAd appOpenAd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Initialize Google Play Games Services SDK v2
         PlayGamesSdk.initialize(this);
+
+        // Initialize Google Mobile Ads SDK asynchronously
+        MobileAds.initialize(this, initializationStatus -> {
+            loadAppOpenAd();
+        });
 
         webView = new WebView(this);
         webView.setBackgroundColor(Color.BLACK);
@@ -57,16 +70,29 @@ public class MainActivity extends Activity {
         });
         webView.addJavascriptInterface(new TtsBridge(), "AndroidTts");
         webView.addJavascriptInterface(new PlayGamesBridge(), "PlayGamesBridge");
+        webView.addJavascriptInterface(new AdMobBridge(), "AdMobBridge");
 
         FrameLayout root = new FrameLayout(this);
         root.setBackgroundColor(Color.BLACK);
         root.addView(webView, new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+
+        // Create AdMob Banner View at bottom
+        adView = new AdView(this);
+        adView.setAdUnitId(getString(R.string.admob_banner_id));
+        adView.setAdSize(AdSize.BANNER);
+        FrameLayout.LayoutParams adParams = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        adParams.gravity = android.view.Gravity.BOTTOM | android.view.Gravity.CENTER_HORIZONTAL;
+        root.addView(adView, adParams);
+
+        // Load Banner Ad
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
+
         setContentView(root);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            // Android 15+ is always edge-to-edge, so inset the WebView itself rather than padding it:
-            // a real size change fires the page's resize handler and the canvas re-fits inside the safe area.
             root.setOnApplyWindowInsetsListener((v, insets) -> {
                 Insets bars = insets.getInsets(WindowInsets.Type.systemBars() | WindowInsets.Type.displayCutout());
                 FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) webView.getLayoutParams();
@@ -85,8 +111,6 @@ public class MainActivity extends Activity {
                 controller.hide(WindowInsets.Type.systemBars());
             }
         } else {
-            // Android 7-10: these inset and controller APIs do not exist, and the window is not
-            // edge-to-edge, so the plain immersive flags are enough.
             applyLegacyImmersive(root);
         }
 
@@ -100,9 +124,27 @@ public class MainActivity extends Activity {
             }
         });
 
-        // Without focus the +FLAG country search cannot raise the keyboard.
         webView.requestFocus();
         webView.loadUrl(ASSET_URL);
+    }
+
+    private void loadAppOpenAd() {
+        AdRequest request = new AdRequest.Builder().build();
+        AppOpenAd.load(
+                this,
+                getString(R.string.admob_open_id),
+                request,
+                new AppOpenAd.AppOpenAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(AppOpenAd ad) {
+                        appOpenAd = ad;
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(com.google.android.gms.ads.LoadAdError loadAdError) {
+                        appOpenAd = null;
+                    }
+                });
     }
 
     @SuppressWarnings("deprecation")
@@ -125,6 +167,7 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onPause() {
+        if (adView != null) adView.pause();
         webView.onPause();
         super.onPause();
     }
@@ -132,11 +175,13 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (adView != null) adView.resume();
         webView.onResume();
     }
 
     @Override
     protected void onDestroy() {
+        if (adView != null) adView.destroy();
         if (tts != null) tts.shutdown();
         webView.destroy();
         super.onDestroy();
@@ -191,6 +236,28 @@ public class MainActivity extends Activity {
                 AchievementsClient achievementsClient = PlayGames.getAchievementsClient(MainActivity.this);
                 achievementsClient.unlock(achievementId);
             } catch (Exception ignored) {}
+        }
+    }
+
+    private class AdMobBridge {
+
+        @JavascriptInterface
+        public void showAppOpenAd() {
+            runOnUiThread(() -> {
+                if (appOpenAd != null) {
+                    appOpenAd.show(MainActivity.this);
+                }
+            });
+        }
+
+        @JavascriptInterface
+        public void reloadBanner() {
+            runOnUiThread(() -> {
+                if (adView != null) {
+                    AdRequest adRequest = new AdRequest.Builder().build();
+                    adView.loadAd(adRequest);
+                }
+            });
         }
     }
 }

@@ -5,4 +5,10 @@
     <string name="google_api_key">AIzaSyBKBfiRhvwPqFRd0NuY4aLIVuyodbTrZBY</string>
     <string name="default_web_client_id">232281796759-k5pvbfdkr17vj78v6kadqsjes9cn1dmg.apps.googleusercontent.com</string>
     <string name="play_developer_service_account">country-flags-battles@victors-514002.iam.gserviceaccount.com</string>
+
+    <!-- AdMob App ID and Ad Unit IDs -->
+    <string name="admob_app_id">ca-app-pub-3286584236618316~7019533941</string>
+    <string name="admob_banner_id">ca-app-pub-3286584236618316/1380194454</string>
+    <string name="admob_native_id">ca-app-pub-3286584236618316/2693276123</string>
+    <string name="admob_open_id">ca-app-pub-3286584236618316/5072027458</string>
 </resources>
