@@ -3,4 +3,6 @@
     <string name="app_name">Boost Flag Rush</string>
     <string name="game_services_project_id">1030417220838</string>
     <string name="google_api_key">AIzaSyBKBfiRhvwPqFRd0NuY4aLIVuyodbTrZBY</string>
+    <string name="default_web_client_id">232281796759-k5pvbfdkr17vj78v6kadqsjes9cn1dmg.apps.googleusercontent.com</string>
+    <string name="play_developer_service_account">country-flags-battles@victors-514002.iam.gserviceaccount.com</string>
 </resources>

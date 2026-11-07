@@ -12,7 +12,12 @@
           "package_name": "com.victorflagsa.boostflagrush"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "232281796759-k5pvbfdkr17vj78v6kadqsjes9cn1dmg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCYzstjQT8EuNndTSgsIRW7Drui7PAi13Q"

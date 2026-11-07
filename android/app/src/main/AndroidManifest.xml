@@ -34,6 +34,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_api_key" />
 
+        <meta-data
+            android:name="com.google.android.gms.games.DEFAULT_WEB_CLIENT_ID"
+            android:value="@string/default_web_client_id" />
+
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|density|uiMode"
