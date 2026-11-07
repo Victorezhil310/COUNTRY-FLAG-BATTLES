@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1030417220838",
+    "project_id": "country-flags-battles",
+    "storage_bucket": "country-flags-battles.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1030417220838:android:187c30e47babd8d89ae727",
+        "android_client_info": {
+          "package_name": "com.victorflagsa.boostflagrush"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYzstjQT8EuNndTSgsIRW7Drui7PAi13Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
