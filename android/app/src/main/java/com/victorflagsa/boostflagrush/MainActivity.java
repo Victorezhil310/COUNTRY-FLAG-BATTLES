@@ -1,8 +1,10 @@
 package com.victorflagsa.boostflagrush;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Insets;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -75,6 +77,7 @@ public class MainActivity extends Activity {
         webView.addJavascriptInterface(new PlayGamesBridge(), "PlayGamesBridge");
         webView.addJavascriptInterface(new AdMobBridge(), "AdMobBridge");
         webView.addJavascriptInterface(new IntegrityBridge(), "IntegrityBridge");
+        webView.addJavascriptInterface(new FeedbackBridge(), "FeedbackBridge");
 
         FrameLayout root = new FrameLayout(this);
         root.setBackgroundColor(Color.BLACK);
@@ -278,6 +281,19 @@ public class MainActivity extends Activity {
                                 .build()
                 );
             } catch (Exception ignored) {}
+        }
+    }
+
+    private class FeedbackBridge {
+
+        @JavascriptInterface
+        public void openFeedbackUrl() {
+            runOnUiThread(() -> {
+                try {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.feedback_url)));
+                    startActivity(intent);
+                } catch (Exception ignored) {}
+            });
         }
     }
 }

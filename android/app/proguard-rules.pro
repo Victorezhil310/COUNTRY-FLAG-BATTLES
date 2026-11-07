@@ -10,6 +10,7 @@
 -keepclassmembers class com.victorflagsa.boostflagrush.MainActivity$PlayGamesBridge { *; }
 -keepclassmembers class com.victorflagsa.boostflagrush.MainActivity$AdMobBridge { *; }
 -keepclassmembers class com.victorflagsa.boostflagrush.MainActivity$IntegrityBridge { *; }
+-keepclassmembers class com.victorflagsa.boostflagrush.MainActivity$FeedbackBridge { *; }
 
 # Preserve Google Play Services Ads, Games, & Integrity API classes
 -keep class com.google.android.gms.ads.** { *; }
