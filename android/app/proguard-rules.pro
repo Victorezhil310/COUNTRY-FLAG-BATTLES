@@ -1,5 +1,12 @@
+# Full mode R8 Optimization & Class Repackaging
+-optimizationpasses 5
+-allowaccessmodification
+-repackageclasses ''
+-overloadaggressively
+-renamesourcefileattribute SourceFile
+-keepattributes SourceFile,LineNumberTable,*Annotation*
+
 # Preserve JavaScript interface methods for WebView Bridges
--keepattributes *Annotation*
 -keepclassmembers class * {
     @android.webkit.JavascriptInterface <methods>;
 }
