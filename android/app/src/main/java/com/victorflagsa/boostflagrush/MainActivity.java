@@ -16,6 +16,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 
+import com.google.android.gms.games.AchievementsClient;
+import com.google.android.gms.games.GamesSignInClient;
+import com.google.android.gms.games.LeaderboardsClient;
+import com.google.android.gms.games.PlayGames;
 import com.google.android.gms.games.PlayGamesSdk;
 
 import java.util.Locale;
@@ -52,6 +56,7 @@ public class MainActivity extends Activity {
             }
         });
         webView.addJavascriptInterface(new TtsBridge(), "AndroidTts");
+        webView.addJavascriptInterface(new PlayGamesBridge(), "PlayGamesBridge");
 
         FrameLayout root = new FrameLayout(this);
         root.setBackgroundColor(Color.BLACK);
@@ -154,6 +159,38 @@ public class MainActivity extends Activity {
         @JavascriptInterface
         public void stop() {
             if (ttsReady) tts.stop();
+        }
+    }
+
+    private class PlayGamesBridge {
+
+        @JavascriptInterface
+        public void checkSignIn() {
+            try {
+                GamesSignInClient gamesSignInClient = PlayGames.getGamesSignInClient(MainActivity.this);
+                gamesSignInClient.isAuthenticated().addOnCompleteListener(task -> {
+                    boolean isAuthenticated = (task.isSuccessful() && task.getResult().isAuthenticated());
+                    if (!isAuthenticated) {
+                        gamesSignInClient.signIn();
+                    }
+                });
+            } catch (Exception ignored) {}
+        }
+
+        @JavascriptInterface
+        public void submitScore(long score) {
+            try {
+                LeaderboardsClient leaderboardsClient = PlayGames.getLeaderboardsClient(MainActivity.this);
+                leaderboardsClient.submitScore("CgkI_v_V6_sCEAIQAQ", score);
+            } catch (Exception ignored) {}
+        }
+
+        @JavascriptInterface
+        public void unlockAchievement(String achievementId) {
+            try {
+                AchievementsClient achievementsClient = PlayGames.getAchievementsClient(MainActivity.this);
+                achievementsClient.unlock(achievementId);
+            } catch (Exception ignored) {}
         }
     }
 }
