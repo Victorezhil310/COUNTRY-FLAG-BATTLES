@@ -26,6 +26,9 @@ import com.google.android.gms.games.GamesSignInClient;
 import com.google.android.gms.games.LeaderboardsClient;
 import com.google.android.gms.games.PlayGames;
 import com.google.android.gms.games.PlayGamesSdk;
+import com.google.android.play.core.integrity.IntegrityManager;
+import com.google.android.play.core.integrity.IntegrityManagerFactory;
+import com.google.android.play.core.integrity.IntegrityTokenRequest;
 
 import java.util.Locale;
 
@@ -71,6 +74,7 @@ public class MainActivity extends Activity {
         webView.addJavascriptInterface(new TtsBridge(), "AndroidTts");
         webView.addJavascriptInterface(new PlayGamesBridge(), "PlayGamesBridge");
         webView.addJavascriptInterface(new AdMobBridge(), "AdMobBridge");
+        webView.addJavascriptInterface(new IntegrityBridge(), "IntegrityBridge");
 
         FrameLayout root = new FrameLayout(this);
         root.setBackgroundColor(Color.BLACK);
@@ -258,6 +262,22 @@ public class MainActivity extends Activity {
                     adView.loadAd(adRequest);
                 }
             });
+        }
+    }
+
+    private class IntegrityBridge {
+
+        @JavascriptInterface
+        public void requestIntegrityToken(String nonce) {
+            try {
+                IntegrityManager integrityManager = IntegrityManagerFactory.create(MainActivity.this);
+                integrityManager.requestIntegrityToken(
+                        IntegrityTokenRequest.builder()
+                                .setCloudProjectNumber(1030417220838L)
+                                .setNonce(nonce != null && !nonce.isEmpty() ? nonce : "boostflagrush")
+                                .build()
+                );
+            } catch (Exception ignored) {}
         }
     }
 }
