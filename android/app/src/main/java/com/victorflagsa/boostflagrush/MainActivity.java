@@ -16,6 +16,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 
+import com.google.android.gms.games.PlayGamesSdk;
+
 import java.util.Locale;
 
 public class MainActivity extends Activity {
@@ -29,6 +31,9 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Initialize Google Play Games Services SDK v2
+        PlayGamesSdk.initialize(this);
 
         webView = new WebView(this);
         webView.setBackgroundColor(Color.BLACK);

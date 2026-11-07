@@ -26,6 +26,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BoostFlagRush">
 
+        <meta-data
+            android:name="com.google.android.gms.games.APP_ID"
+            android:value="@string/game_services_project_id" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_api_key" />
+
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|density|uiMode"
